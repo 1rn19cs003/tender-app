@@ -104,7 +104,7 @@ const AdminGridComponent = () => {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.url} download={ params.row.url +".pdf"} >
+            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.url} target="_blank" download={ params.row.url +".pdf"} >
                 <Button
                         variant="text"
                         color="primary"

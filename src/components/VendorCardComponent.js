@@ -149,28 +149,26 @@ const VendorCardComponent = ({ data }) => {
                     spacing={2}
                     justifyContent="space-evenly"
                   >
-                    {/* <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} download={ data.filename +".pdf"} > */}
+                    <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} target="_blank" download={data.filename + ".pdf"} style={{ "textDecoration": "none" }}>
                     <Button
                       startIcon={<DownloadRoundedIcon />}
                       variant="contained"
-                      sx={{ width: "15vw" }}
+                      sx={{ width: "15vw", height: "8vh" }}
                     >
-                      <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} download={ data.filename +".pdf"} >
-                        Download 
-                      </a>
+                        Download File 
                     </Button>
-                    {/* </a> */}
+                    </a>
 
                     <Button
                       component="label"
                       startIcon={<FileUploadRoundedIcon />}
                       variant="contained"
-                      sx={{ width: "15vw" }}
+                      sx={{ width: "15vw", height: "8vh" }}
                       onChange={() => {
                         uploadFile(data.tenderName);
                       }}
                     >
-                      Upload 
+                      Upload File
                       <input type="file" onChange={handleFileSelect} hidden />
                     </Button>
 
@@ -185,7 +183,7 @@ const VendorCardComponent = ({ data }) => {
                       startIcon={<CheckBoxRoundedIcon />}
                       variant="contained"
                       color="success"
-                      sx={{ width: "10vw" }}
+                      sx={{ width: "10vw",height: "8vh" }}
                     >
                       Save
                     </Button>
