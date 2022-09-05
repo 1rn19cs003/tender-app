@@ -16,7 +16,7 @@ const VendorUploadTender = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState([]);
 
   const currentDate = new Date();
 
