@@ -54,7 +54,7 @@ const AdminGridComponent = () => {
             orgName: res.data[i].stud[0].profile.organization,
             phone: res.data[i].stud[0].profile.phoneno,
             tenderValue: res.data[i].profile.tenderValue,
-            url: res.data[i].profile.file.path,
+            url: res.data[i].profile.file.filename,
           };
           data.push(obj);
         }
