@@ -104,30 +104,14 @@ const AdminGridComponent = () => {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            <Button
-              variant="text"
-              color="primary"
-              onClick={() => {
-                console.log(
-                  "Button clicked by :",
-                  params.row.vendorName,
-                  params.row.orgName,
-                  params.row.url,
-                  tenderName
-                );
-                axios({
-                  url: "https://tranquil-temple-34464.herokuapp.com/download",
-                  method: "GET",
-                  path_url: params.row.url,
-                  withCredentials: true,
-                  crossDomain: true,
-                }).then((res) => {
-                  // console.log(res);
-                });
-              }}
-            >
-              <DownloadRoundedIcon />
-            </Button>
+            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.url} download={ params.row.url +".pdf"} >
+                <Button
+                        variant="text"
+                        color="primary"
+                    >
+                        <DownloadRoundedIcon />
+                </Button>
+            </a>
           </Box>
         );
       },
