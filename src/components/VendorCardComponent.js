@@ -149,16 +149,16 @@ const VendorCardComponent = ({ data }) => {
                     spacing={2}
                     justifyContent="space-evenly"
                   >
+                    <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} download={ data.filename +".pdf"} >
                     <Button
                       startIcon={<DownloadRoundedIcon />}
                       variant="contained"
                       sx={{ width: "15vw" }}
-                      onClick={() => {
-                        downloadFile(data.tenderName);
-                      }}
+                      // href={"https://tranquil-temple-34464.herokuapp.com//" + data.filename} download={ data.filename +".pdf"} 
                     >
                       Download File
                     </Button>
+                    </a>
 
                     <Button
                       component="label"

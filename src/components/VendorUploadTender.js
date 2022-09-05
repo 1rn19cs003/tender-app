@@ -34,6 +34,7 @@ const VendorUploadTender = () => {
           tenderName: res.data[i].tenderName,
           startDate: res.data[i].profile.startDate,
           endDate: res.data[i].profile.endDate,
+          filename: res.data[i].profile.file.filename,
         };
 
         // Comment these 3 statements if all available tenders are to be shown under Vendor Upload
