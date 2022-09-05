@@ -149,16 +149,17 @@ const VendorCardComponent = ({ data }) => {
                     spacing={2}
                     justifyContent="space-evenly"
                   >
-                    <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} download={ data.filename +".pdf"} >
+                    {/* <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} download={ data.filename +".pdf"} > */}
                     <Button
                       startIcon={<DownloadRoundedIcon />}
                       variant="contained"
                       sx={{ width: "15vw" }}
-                      // href={"https://tranquil-temple-34464.herokuapp.com//" + data.filename} download={ data.filename +".pdf"} 
                     >
-                      Download File
+                      <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} download={ data.filename +".pdf"} >
+                        Download 
+                      </a>
                     </Button>
-                    </a>
+                    {/* </a> */}
 
                     <Button
                       component="label"
@@ -169,7 +170,7 @@ const VendorCardComponent = ({ data }) => {
                         uploadFile(data.tenderName);
                       }}
                     >
-                      Upload File
+                      Upload 
                       <input type="file" onChange={handleFileSelect} hidden />
                     </Button>
 
