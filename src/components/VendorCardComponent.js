@@ -68,18 +68,26 @@ const VendorCardComponent = ({ data }) => {
         tender_file: formData.get("file"),
       };
       console.log(newTender);
-
-      // AXIOS Connection - TODO
-      try {
-        const response = await axios({
-          method: "post",
-          url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
-          data: newTender,
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        setOpen(true);
-      } catch (error) {
-        console.log(error);
+    
+      if (newTender.tender_file === "null") {
+        window.alert("File Upload is mandatory!");
+        return;
+      } else if (newTender.tenderValue === '') {
+        window.alert("Tender value cannot be empty!");
+        return;
+      } else {
+        // AXIOS Connection - TODO
+        try {
+          const response = await axios({
+            method: "post",
+            url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
+            data: newTender,
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          setOpen(true);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };

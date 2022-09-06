@@ -16,7 +16,7 @@ const VendorUploadTender = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState([]);  // Delete before deploy {tenderName: "abc", startDate: "09/31/2022", endDate: "10/20/2022", filename: "xyz.pdf"}
 
   const currentDate = new Date();
 

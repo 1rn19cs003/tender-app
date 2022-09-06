@@ -36,7 +36,7 @@ const AdminUploadTender = () => {
 
   // a local state to store the currently selected file.
   const [selectedFile, setSelectedFile] = React.useState(null);
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState([]);    // Delete before deploy {tenderName: "abc", startDate: "09/31/2022", endDate: "10/20/2022"}
   const [check, setCheck] = React.useState(0);
 
   React.useEffect(() => {
@@ -87,6 +87,7 @@ const AdminUploadTender = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/status",
       method: "GET",
@@ -114,18 +115,31 @@ const AdminUploadTender = () => {
       };
       console.log(newTender);
 
-      // AXIOS Connection - TODO
-      try {
-        const response = await axios({
-          method: "post",
-          url: "https://tranquil-temple-34464.herokuapp.com/upload_vender_admin",
-          data: newTender,
-          headers: { "Content-Type": "multipart/form-data" },
-        }).then((res) => {
-          window.location.reload();
-        });
-      } catch (error) {
-        console.log(error);
+      // Add check for dates & file upload mandatory
+
+      if (newTender.file_upload === 'null') {
+        window.alert("File Upload is mandatory!");
+        return;
+      }
+      else if (newTender.startDate === newTender.endDate) {
+        window.alert("Start Date and End Date cannot be same!");
+        return;
+      }
+      else
+      {
+        // AXIOS Connection - TODO
+        try {
+          const response = await axios({
+            method: "post",
+            url: "https://tranquil-temple-34464.herokuapp.com/upload_vender_admin",
+            data: newTender,
+            headers: { "Content-Type": "multipart/form-data" },
+          }).then((res) => {
+            window.location.reload();
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };

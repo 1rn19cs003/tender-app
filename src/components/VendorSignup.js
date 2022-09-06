@@ -21,6 +21,7 @@ const initialValues = {
   otp: "",
   email: "",
   password: "",
+  renterpwd: "",
 };
 
 // Used for snackbar Alert
@@ -48,21 +49,27 @@ const VendorSignup = () => {
       admin: false,
     };
 
-    if ( window.userVerified === "Yes") {
-      axios({
-        url: "https://tranquil-temple-34464.herokuapp.com/register",
-        method: "POST",
-        withCredentials: true,
-        crossDomain: true,
-        data: credentials,
-      }).then((res) => {
-        // console.log(res);
-        if (res.data.status === "success") {
-          navigate("/vendor/uploadtender");
-        } else {
-          setOpen(true);
-        }
-      });
+    if (window.userVerified === "Yes") {
+      if (credentials.password === data.get("renterpwd")) {
+        axios({
+          url: "https://tranquil-temple-34464.herokuapp.com/register",
+          method: "POST",
+          withCredentials: true,
+          crossDomain: true,
+          data: credentials,
+        }).then((res) => {
+          // console.log(res);
+          if (res.data.status === "success") {
+            navigate("/vendor/uploadtender");
+          } else {
+            setOpen(true);
+          }
+        });
+      }
+      else {
+        window.alert("Password and Re-enter Password are not the same!");
+        return;
+      }
     } else {
       setOpen6(true);
     }
@@ -266,6 +273,16 @@ const VendorSignup = () => {
               label="Password"
               type="password"
               value={values.password}
+              onChange={handleInputChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="renterpwd"
+              label="Re-enter Password"
+              type="password"
+              value={values.renterpwd}
               onChange={handleInputChange}
             />
             <Button
