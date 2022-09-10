@@ -11,6 +11,10 @@ import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
+import { useNavigate } from "react-router-dom";
+
+
 
 // Used for snackbar Alert
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -18,6 +22,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const VendorCardComponent = ({ data }) => {
+
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [check, setCheck] = React.useState(0);
   const [email, setEmail] = React.useState(null);
@@ -68,6 +74,7 @@ const VendorCardComponent = ({ data }) => {
         tender_file: formData.get("file"),
       };
       console.log(newTender);
+      
     
       if (newTender.tender_file === "null") {
         window.alert("File Upload is mandatory!");
@@ -105,6 +112,25 @@ const VendorCardComponent = ({ data }) => {
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
   };
+
+
+  // route change to VendorTenderDetails
+  const routeChange = (x) => { 
+    window.sessionStorage.setItem("tender_name", x);
+
+    // Retrieve endDate from "data" for the User selected tender name
+    let enddate;
+    for (let i = 0; i < data.length; i++)
+      if (data[i].tenderName.trim() === x.trim())
+      {
+        window.sessionStorage.setItem("end_date", data[i].endDate);
+        window.sessionStorage.setItem("file_name", data[i].filename);
+      }
+    //  -------- Now "enddate" has the endDate for the User Selected tender
+
+    navigate("./tender");
+  }
+
 
   // -----Opening and Closing snackbar-----
   const [open, setOpen] = React.useState(false);
@@ -157,6 +183,19 @@ const VendorCardComponent = ({ data }) => {
                     spacing={2}
                     justifyContent="space-evenly"
                   >
+
+                    <Button
+                      component="label"
+                      startIcon={<ForwardRoundedIcon />}
+                      variant="contained"
+                      sx={{ width: "15vw", height: "8vh" }}
+                      onClick={() => { routeChange(data.tenderName); }}
+                    >
+                      Apply Now
+                      
+                    </Button>
+
+{/* 
                     <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} target="_blank" download={data.filename + ".pdf"} style={{ "textDecoration": "none" }}>
                     <Button
                       startIcon={<DownloadRoundedIcon />}
@@ -194,7 +233,7 @@ const VendorCardComponent = ({ data }) => {
                       sx={{ width: "10vw",height: "8vh" }}
                     >
                       Save
-                    </Button>
+                    </Button> */}
                   </Stack>
                   <br></br>
                 </Grid>
