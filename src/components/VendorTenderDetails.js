@@ -18,6 +18,17 @@ import Button from "@mui/material/Button";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { ToWords } from 'to-words';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
+
+
+// Used for snackbar Alert
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+
 
 const VendorTenderDetails = () => {
   const navigate = useNavigate();
@@ -108,8 +119,10 @@ const VendorTenderDetails = () => {
           headers: { "Content-Type": "multipart/form-data" },
         });
         console.log("Success! Tender Uploaded.");
+        setOpen(true);
       } catch (error) {
         console.log("Error. Tender not Uploaded!\n", error);
+        window.location.reload();
       }
     }
     
@@ -126,6 +139,24 @@ const VendorTenderDetails = () => {
     setSelectedFile3(event.target.files[0]);
   };
     
+
+
+  
+  // -----Opening and Closing snackbar-----
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+  // -----------------------------
+
   const logout = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/logout",
@@ -398,6 +429,11 @@ const VendorTenderDetails = () => {
           </Grid>
         </Container>
       </Box>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Tender Uploaded.
+        </Alert>
+      </Snackbar>
     </>
   );
 };
