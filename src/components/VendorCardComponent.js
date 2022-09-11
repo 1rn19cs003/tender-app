@@ -13,6 +13,11 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import ForwardRoundedIcon from '@mui/icons-material/ForwardRounded';
 import { useNavigate } from "react-router-dom";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 
 
@@ -24,6 +29,17 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 const VendorCardComponent = ({ data }) => {
 
   const navigate = useNavigate();
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
+  };
+  const handleClickAway = () => {     // // "DISAGREE" button is clicked    OR    User has clicked away 
+    setOpenDialog(false);
+  };
+  const handleDialogClose = () => {   // "AGREE" button is clicked
+    setOpenDialog(false);
+    navigate("./tender");
+  };
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [check, setCheck] = React.useState(0);
   const [email, setEmail] = React.useState(null);
@@ -127,8 +143,8 @@ const VendorCardComponent = ({ data }) => {
         window.sessionStorage.setItem("file_name", data[i].filename);
       }
     //  -------- Now "enddate" has the endDate for the User Selected tender
-
-    navigate("./tender");
+    setOpenDialog(true); 
+    // navigate("./tender");
   }
 
 
@@ -183,62 +199,73 @@ const VendorCardComponent = ({ data }) => {
                     spacing={2}
                     justifyContent="space-evenly"
                   >
-
                     <Button
                       component="label"
                       startIcon={<ForwardRoundedIcon />}
                       variant="contained"
                       sx={{ width: "15vw", height: "8vh" }}
-                      onClick={() => { routeChange(data.tenderName); }}
+                      onClick={() => {
+                        routeChange(data.tenderName);
+                      }}
+                      // onClick={handleDialogOpen}
                     >
                       Apply Now
-                      
                     </Button>
-
-{/* 
-                    <a href={"https://tranquil-temple-34464.herokuapp.com/uploads/" + data.filename} target="_blank" download={data.filename + ".pdf"} style={{ "textDecoration": "none" }}>
-                    <Button
-                      startIcon={<DownloadRoundedIcon />}
-                      variant="contained"
-                      sx={{ width: "15vw", height: "8vh" }}
-                    >
-                        Download File 
-                    </Button>
-                    </a>
-
-                    <Button
-                      component="label"
-                      startIcon={<FileUploadRoundedIcon />}
-                      variant="contained"
-                      sx={{ width: "15vw", height: "8vh" }}
-                      onChange={() => {
-                        uploadFile(data.tenderName);
-                      }}
-                    >
-                      Upload File
-                      <input type="file" onChange={handleFileSelect} hidden />
-                    </Button>
-
-                    <TextField
-                      name="tenderValue"
-                      label="Tender Value"
-                      type="tel"
-                    />
-
-                    <Button
-                      type="submit"
-                      startIcon={<CheckBoxRoundedIcon />}
-                      variant="contained"
-                      color="success"
-                      sx={{ width: "10vw",height: "8vh" }}
-                    >
-                      Save
-                    </Button> */}
                   </Stack>
                   <br></br>
                 </Grid>
               </Grid>
             </Paper>
+
+
+
+            <Dialog open={openDialog} onClose={handleClickAway} maxWidth="sm">
+              <DialogTitle>{"Terms & Conditions"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent="center"
+                    alignItems="center"
+                    paddingX="1rem"
+                  >
+                    <Grid item xs={12}>
+                      <Typography variant="h7" color="secondary">
+                        Disclaimer:{" "}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Typography variant="h9" color="text.primary">
+                        1. Lorem ipsum dolor, sit amet consectetur adipisicing
+                        elit. Repudiandae, velit sit amet consectetur adipisicing.
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Typography variant="h9" color="text.primary">
+                        2. Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. Optio natus necessitatibus ducimus magnam nesciunt
+                        debitis veniam blanditiis suscipit. Omnis, corporis sit amet consectetur adipisicing.
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Typography variant="h9" color="text.primary">
+                        3. Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. Odio architecto fuga voluptates similique deserunt
+                        esse, beatae fugiat sunt.
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClickAway} color="error">Disagree</Button>
+                <Button onClick={handleDialogClose}>Agree</Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
         );
       })}

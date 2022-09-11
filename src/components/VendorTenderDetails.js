@@ -17,9 +17,32 @@ import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import Button from "@mui/material/Button";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
+import { ToWords } from 'to-words';
 
 const VendorTenderDetails = () => {
   const navigate = useNavigate();
+
+  //  To Words package config
+  const toWords = new ToWords({
+  localeCode: 'en-IN',
+  converterOptions: {
+    currency: true,
+    ignoreDecimal: false,
+    ignoreZeroCurrency: false,
+    doNotAddOnly: false,
+    currencyOptions: { 
+      name: 'Rupee',
+      plural: 'Rupees',
+      symbol: '₹',
+      fractionalUnit: {
+        name: 'Paisa',
+        plural: 'Paise',
+        symbol: '',
+      },
+    }
+  }
+});
+  //---------------------------
 
   const [selectedFile1, setSelectedFile1] = React.useState(null);
   const [selectedFile2, setSelectedFile2] = React.useState(null);
@@ -35,13 +58,18 @@ const VendorTenderDetails = () => {
     tender_val: "",
     tender_val_words: "",
   });
-  const handleChange = (e) => {
+
+  const handleValueChange = (e) => {
+    // --------handleChange----------
     const { name, value } = e.target;
     setVal((prevState) => ({
       ...prevState,
       [name]: value,
+      ["tender_val_words"]: toWords.convert(Number(value), { currency: true, ignoreZeroCurrency: true }),
     }));
-  };
+    // -----------------------------------
+    
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -281,7 +309,7 @@ const VendorTenderDetails = () => {
                     fullWidth
                     name="tender_val"
                     value={val.tender_val}
-                    onChange={handleChange}
+                    onChange={handleValueChange}
                     variant="outlined"
                   />
                 </Grid>
@@ -298,8 +326,11 @@ const VendorTenderDetails = () => {
                     name="tender_val_words"
                     value={val.tender_val_words}
                     multiline="true"
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     variant="outlined"
+                    InputProps={{
+                      readOnly: true,
+                    }}
                   />
                 </Grid>
                 {/* ----------------------------------------------- */}
