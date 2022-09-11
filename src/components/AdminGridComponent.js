@@ -31,7 +31,7 @@ const AdminGridComponent = () => {
     navigate("/");
   };
 
-  const [rows, setRows] = React.useState([]);
+  const [rows, setRows] = React.useState([]);   //{id: 10, vendorName: "Ramesh Kumar", orgName: "Ventura LLC", phone: "9123871232", tenderValue: "150750" }
 
   React.useEffect(() => {
     axios({
@@ -75,13 +75,13 @@ const AdminGridComponent = () => {
       field: "vendorName",
       headerName: "Vendor Name",
       flex: 1,
-      minWidth: 200,
+      minWidth: 300,
     },
     {
       field: "orgName",
       headerName: "Organization Name",
       flex: 1,
-      minWidth: 200,
+      minWidth: 300,
     },
     {
       field: "phone",
@@ -91,15 +91,17 @@ const AdminGridComponent = () => {
     },
     {
       field: "tenderValue",
-      headerName: "Tender Value ( in \u20B9 )",
+      headerName: "Tender Amount",
       flex: 1,
       minWidth: 200,
     },
-    {
+
+
+    {   // --------------------------------- EMD File ----------------------------------------------------
       field: "tenderFile",
-      headerName: "Download Tender",
+      headerName: "EMD File",
       flex: 1,
-      minWidth: 200,
+      minWidth: 100,
       align: "left",
       renderCell: (params) => {
         return (
@@ -112,6 +114,51 @@ const AdminGridComponent = () => {
                         <DownloadRoundedIcon />
                 </Button>
             </a>
+          </Box>
+        );
+      },
+    },
+
+    {    // --------------------------------- Aadhar File ----------------------------------------------------
+      field: "aadhar",
+      headerName: "Aadhar",
+      flex: 1,
+      minWidth: 100,
+      align: "left",
+      renderCell: (params) => {
+        return (
+          <Box textAlign="center">
+            {/* <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.url} target="_blank" download={ params.row.url +".pdf"} > */}
+                <Button
+                        variant="text"
+                        color="primary"
+                    >
+                        <DownloadRoundedIcon />
+                </Button>
+            {/* </a> */}
+          </Box>
+        );
+      },
+    },
+
+
+    {    // --------------------------------- PAN File ----------------------------------------------------
+      field: "pan",
+      headerName: "PAN",
+      flex: 1,
+      minWidth: 100,
+      align: "left",
+      renderCell: (params) => {
+        return (
+          <Box textAlign="center">
+            {/* <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.url} target="_blank" download={ params.row.url +".pdf"} > */}
+                <Button
+                        variant="text"
+                        color="primary"
+                    >
+                        <DownloadRoundedIcon />
+                </Button>
+            {/* </a> */}
           </Box>
         );
       },
