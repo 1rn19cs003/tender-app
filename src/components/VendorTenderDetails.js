@@ -84,6 +84,27 @@ const VendorTenderDetails = () => {
 
   const [existingTender, setExistingTender] = React.useState("");
 
+  // 1. Check if Vendor has an existing tender
+  axios({
+    url: "https://tranquil-temple-34464.herokuapp.com/all_data",
+    method: "GET",
+    withCredentials: true,
+    crossDomain: true,
+  }).then((res) => {
+    // console.log("-----------res data----------------", res);
+    for (var i = 0; i < res.data.length; i++) {
+      if (
+        res.data[i].tenderName.trim() === newTender.tenderName.trim() &&
+        res.data[i].profile.email.trim() === newTender.email.trim()
+      ) {
+        // existing tender - TRUE.  Store tenderVal in existing tender
+        console.log("existing tender - TRUE")
+        setExistingTender(res.data[i].profile.tenderValue);
+        break;
+      }
+    }
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -119,26 +140,26 @@ const VendorTenderDetails = () => {
       // 3. "Disagree"  -> return;
       // 4. upload new tender  iff  existingTender === ""
 
-      // 1. Check if Vendor has an existing tender
-      axios({
-        url: "https://tranquil-temple-34464.herokuapp.com/all_data",
-        method: "GET",
-        withCredentials: true,
-        crossDomain: true,
-      }).then((res) => {
-        // console.log("-----------res data----------------", res);
-        for (var i = 0; i < res.data.length; i++) {
-          if (
-            res.data[i].tenderName.trim() === newTender.tenderName.trim() &&
-            res.data[i].profile.email.trim() === newTender.email.trim()
-          ) {
-            // existing tender - TRUE.  Store tenderVal in existing tender
-            console.log("existing tender - TRUE")
-            setExistingTender(res.data[i].profile.tenderValue);
-            break;
-          }
-        }
-      });
+      // // 1. Check if Vendor has an existing tender
+      // axios({
+      //   url: "https://tranquil-temple-34464.herokuapp.com/all_data",
+      //   method: "GET",
+      //   withCredentials: true,
+      //   crossDomain: true,
+      // }).then((res) => {
+      //   // console.log("-----------res data----------------", res);
+      //   for (var i = 0; i < res.data.length; i++) {
+      //     if (
+      //       res.data[i].tenderName.trim() === newTender.tenderName.trim() &&
+      //       res.data[i].profile.email.trim() === newTender.email.trim()
+      //     ) {
+      //       // existing tender - TRUE.  Store tenderVal in existing tender
+      //       console.log("existing tender - TRUE")
+      //       setExistingTender(res.data[i].profile.tenderValue);
+      //       break;
+      //     }
+      //   }
+      // });
 
       //  Throw <Alert>
       if (existingTender !== "") {
@@ -179,7 +200,7 @@ const VendorTenderDetails = () => {
 
       if (existingTender === "")
       {
-        console.log("First tender - False")
+        console.log("First tender - True")
         // AXIOS Connection -  Upload New Tender
         try {
           const response = await axios({
