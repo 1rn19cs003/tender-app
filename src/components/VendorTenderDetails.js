@@ -98,8 +98,9 @@ const VendorTenderDetails = () => {
         res.data[i].profile.email.trim() === email.trim()
       ) {
         // existing tender - TRUE.  Store tenderVal in existing tender
-        console.log("existing tender - TRUE")
+        console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].profile.tenderValue);
+        console.log("After setExistingTender " + existingTender)
         break;
       }
     }
@@ -200,7 +201,7 @@ const VendorTenderDetails = () => {
 
       if (existingTender === "")
       {
-        console.log("First tender - True")
+        console.log("First tender - True ", existingTender);
         // AXIOS Connection -  Upload New Tender
         try {
           const response = await axios({
