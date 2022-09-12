@@ -48,7 +48,7 @@ const VendorSignup = () => {
       password: data.get("password"),
       admin: false,
     };
-    window.userVerified = "Yes";              //    REMOVE THIS LINE TO RE-ENABLE OTP VERIFICATION 
+    // window.userVerified = "Yes";              //    REMOVE THIS LINE TO RE-ENABLE OTP VERIFICATION 
     if (window.userVerified === "Yes") {
       if (credentials.password === data.get("renterpwd")) {
         axios({

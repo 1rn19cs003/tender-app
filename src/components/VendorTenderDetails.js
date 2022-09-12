@@ -82,6 +82,8 @@ const VendorTenderDetails = () => {
     
   }
 
+  const [existingTender, setExistingTender] = React.useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -100,7 +102,7 @@ const VendorTenderDetails = () => {
       // *****Upload PAN File********
 
     };
-    console.log("Send to API :", newTender);
+    console.log("newTender :", newTender);
     
 
     if (newTender.tender_file === "null") {
@@ -110,19 +112,88 @@ const VendorTenderDetails = () => {
       window.alert("Tender value cannot be empty!");
       return;
     } else {
-      // AXIOS Connection 
-      try {
-        const response = await axios({
-          method: "post",
-          url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
-          data: newTender,
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        console.log("Success! Tender Uploaded.");
-        setOpen(true);
-      } catch (error) {
-        console.log("Error. Tender not Uploaded!\n", error);
-        window.location.reload();
+
+      // Code Here!!!
+      // 1. Check if Vendor has an existing tender
+      // 2. "Agree"     ->  Delete existing tender    
+      // 3. "Disagree"  -> return;
+      // 4. upload new tender  iff  existingTender === ""
+
+      // 1. Check if Vendor has an existing tender
+      axios({
+        url: "https://tranquil-temple-34464.herokuapp.com/all_data",
+        method: "GET",
+        withCredentials: true,
+        crossDomain: true,
+      }).then((res) => {
+        // console.log("-----------res data----------------", res);
+        for (var i = 0; i < res.data.length; i++) {
+          if (
+            res.data[i].tenderName.trim() === newTender.tenderName.trim() &&
+            res.data[i].profile.email.trim() === newTender.email.trim()
+          ) {
+            // existing tender - TRUE.  Store tenderVal in existing tender
+            console.log("existing tender - TRUE")
+            setExistingTender(res.data[i].profile.tenderValue);
+            break;
+          }
+        }
+      });
+
+      //  Throw <Alert>
+      if (existingTender !== "") {
+        if (window.confirm("Are you sure? Your existing tender application of Rs. " + existingTender + " will be deleted.")) { // Clicks Agree
+
+          // Delete existing tender using newTender.tenderName and newTender.email
+
+          console.log("Deleting existing tender")
+          // AXIOS Delete Tender - TODO
+
+          
+          // AXIOS Connection -  Upload New Tender
+          try {
+            const response = await axios({
+              method: "post",
+              url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
+              data: newTender,
+              headers: { "Content-Type": "multipart/form-data" },
+            });
+            console.log("Success! Tender Uploaded.");
+            setOpen(true);
+            return;
+          } catch (error) {
+            console.log("Error. Tender not Uploaded!\n", error);
+            window.location.reload();
+            return;
+          }
+
+        }
+        else {
+          // Clicks "Disagree" or "Click Away"
+          console.log("Disagree/Clickaway")
+          return;
+        }
+
+      }
+
+
+      if (existingTender === "")
+      {
+        console.log("First tender - False")
+        // AXIOS Connection -  Upload New Tender
+        try {
+          const response = await axios({
+            method: "post",
+            url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
+            data: newTender,
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          console.log("Success! Tender Uploaded.");
+          setOpen(true);
+        } catch (error) {
+          console.log("Error. Tender not Uploaded!\n", error);
+          window.location.reload();
+        }
       }
     }
     
@@ -331,43 +402,6 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
-                    Tender Amount
-                  </Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <TextField
-                    type="number"
-                    fullWidth
-                    name="tender_val"
-                    value={val.tender_val}
-                    onChange={handleValueChange}
-                    variant="outlined"
-                  />
-                </Grid>
-                {/* ----------------------------------------------- */}
-
-                <Grid item xs={4}>
-                  <Typography variant="overline" color="text.primary">
-                    Amount (in words)
-                  </Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <TextField
-                    fullWidth
-                    name="tender_val_words"
-                    value={val.tender_val_words}
-                    multiline="true"
-                    // onChange={handleChange}
-                    variant="outlined"
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                {/* ----------------------------------------------- */}
-
-                <Grid item xs={4}>
-                  <Typography variant="overline" color="text.primary">
                     Aadhar
                   </Typography>
                 </Grid>
@@ -407,6 +441,47 @@ const VendorTenderDetails = () => {
                   </Button>
                 </Grid>
                 {/* ----------------------------------------------- */}
+
+                <Grid item xs={4}>
+                  <Typography variant="overline" color="text.primary">
+                    Tender Amount
+                  </Typography>
+                </Grid>
+                <Grid item xs={8}>
+                  <TextField
+                    type="number"
+                    fullWidth
+                    name="tender_val"
+                    value={val.tender_val}
+                    onChange={handleValueChange}
+                    variant="outlined"
+                  />
+                </Grid>
+                {/* ----------------------------------------------- */}
+
+                <Grid item xs={4}>
+                  <Typography variant="overline" color="text.primary">
+                    Amount (in words)
+                  </Typography>
+                </Grid>
+                <Grid item xs={8}>
+                  <TextField
+                    fullWidth
+                    name="tender_val_words"
+                    value={val.tender_val_words}
+                    multiline="true"
+                    // onChange={handleChange}
+                    variant="outlined"
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+                {/* ----------------------------------------------- */}
+
+                
+
+               
 
                 <Grid item xl={2}>
                   <Button
