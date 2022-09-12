@@ -96,8 +96,8 @@ const VendorTenderDetails = () => {
 
     // console.log("Use Effect: \nres : " + res.data + "\nval : " + val.tender_name + "\nemail : ", email);
     for (var i = 0; i < res.data.length; i++) {
-      console.log(res.data[i].tenderName , " == " + val.tenderName , " => " , (res.data[i].tenderName == val.tenderName));
-      console.log(res.data[i].profile.email , " == " + email , " => " , (res.data[i].profile.email == email));
+      console.log(res.data[i].tenderName , " == " , window.sessionStorage.getItem("tender_name") , " => " , (res.data[i].tenderName == val.tenderName));
+      console.log(res.data[i].profile.email , " == " , email , " => " , (res.data[i].profile.email == email));
 
       if (
         res.data[i].tenderName == val.tenderName &&
