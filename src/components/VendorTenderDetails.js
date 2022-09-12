@@ -91,11 +91,11 @@ const VendorTenderDetails = () => {
     withCredentials: true,
     crossDomain: true,
   }).then((res) => {
-    // console.log("-----------res data----------------", res);
+    console.log("Use Effect: \nres : " + res + "\nval : " + val.tender_name + "\nemail : ", email);
     for (var i = 0; i < res.data.length; i++) {
       if (
-        res.data[i].tenderName.trim() === val.tenderName.trim() &&
-        res.data[i].profile.email.trim() === email.trim()
+        res.data[i].tenderName == val.tenderName &&
+        res.data[i].profile.email === email
       ) {
         // existing tender - TRUE.  Store tenderVal in existing tender
         console.log("existing tender - TRUE" + existingTender)
