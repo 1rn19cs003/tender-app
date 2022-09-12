@@ -83,7 +83,7 @@ const VendorTenderDetails = () => {
   }
 
   const [existingTender, setExistingTender] = React.useState("");
-
+  React.useEffect(() => { 
   // 1. Check if Vendor has an existing tender
   axios({
     url: "https://tranquil-temple-34464.herokuapp.com/all_data",
@@ -105,6 +105,7 @@ const VendorTenderDetails = () => {
       }
     }
   });
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
