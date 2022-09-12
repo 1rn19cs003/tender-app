@@ -95,7 +95,7 @@ const VendorTenderDetails = () => {
     for (var i = 0; i < res.data.length; i++) {
       if (
         res.data[i].tenderName == val.tenderName &&
-        res.data[i].profile.email === email
+        res.data[i].profile.email == email
       ) {
         // existing tender - TRUE.  Store tenderVal in existing tender
         console.log("existing tender - TRUE" + existingTender)
