@@ -90,12 +90,14 @@ const VendorTenderDetails = () => {
     method: "GET",
     withCredentials: true,
     crossDomain: true,
-  }).then((response) => {
-    const res = JSON.stringify(response);
-    console.log("Use Effect: \nres : " + res.data + "\nval : " + val.tender_name + "\nemail : ", email);
+  }).then((res) => {
+    console.log(res);
+    console.log(res.data)
+
+    // console.log("Use Effect: \nres : " + res.data + "\nval : " + val.tender_name + "\nemail : ", email);
     for (var i = 0; i < res.data.length; i++) {
-      console.log(res.data[i].tenderName + " == " + val.tenderName + " => " + (res.data[i].tenderName == val.tenderName));
-      console.log(res.data[i].profile.email + " == " + email + " => " + (res.data[i].profile.email == email));
+      console.log(res.data[i].tenderName , " == " + val.tenderName , " => " , (res.data[i].tenderName == val.tenderName));
+      console.log(res.data[i].profile.email , " == " + email , " => " , (res.data[i].profile.email == email));
 
       if (
         res.data[i].tenderName == val.tenderName &&
