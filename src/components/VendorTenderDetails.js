@@ -91,8 +91,9 @@ const VendorTenderDetails = () => {
     withCredentials: true,
     crossDomain: true,
   }).then((res) => {
-    console.log("Use Effect: \nres : " + res + "\nval : " + val.tender_name + "\nemail : ", email);
+    console.log("Use Effect: \nres : " + res.data + "\nval : " + val.tender_name + "\nemail : ", email);
     for (var i = 0; i < res.data.length; i++) {
+      console.log("Inside for loop : "+res.data[i]);
       if (
         res.data[i].tenderName == val.tenderName &&
         res.data[i].profile.email == email
