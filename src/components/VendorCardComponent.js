@@ -22,7 +22,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 
 
-
 // Used for snackbar Alert
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -245,7 +244,7 @@ const VendorCardComponent = ({ data }) => {
 
                     <Grid item >
                       <a
-                        href="src\Instruction and Account details Form.pdf"
+                        href="../Instruction and Account details Form.pdf"
                         target="_blank"
                         download
                         style={{ textDecoration: "none" }}
