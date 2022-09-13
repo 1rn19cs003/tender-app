@@ -246,7 +246,7 @@ const VendorCardComponent = ({ data }) => {
                       <a
                         href="src\Instruction and Account details Form.pdf"
                         target="_blank"
-                        download="Terms&Conditions.pdf"
+                        download
                         style={{ textDecoration: "none" }}
                       >
                         <Button variant="outlined" color="primary">
