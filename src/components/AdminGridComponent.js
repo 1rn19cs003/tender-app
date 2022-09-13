@@ -55,7 +55,9 @@ const AdminGridComponent = () => {
             orgName: res.data[i].stud[0].profile.organization,
             phone: res.data[i].stud[0].profile.phoneno,
             tenderValue: res.data[i].profile.tenderValue,
-            url: res.data[i].profile.file.filename,
+            urlEmd: res.data[i].profile.edm.filename,
+            urlAadhar: res.data[i].profile.aadhar.filename,
+            urlPan: res.data[i].profile.pan.filename
           };
           data.push(obj);
         }
@@ -107,7 +109,7 @@ const AdminGridComponent = () => {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.url} target="_blank" download={ params.row.url +".pdf"} >
+            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.urlEmd} target="_blank" download={ params.row.urlEmd +".pdf"} >
                 <Button
                         variant="text"
                         color="primary"
@@ -129,14 +131,14 @@ const AdminGridComponent = () => {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            {/* <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.url} target="_blank" download={ params.row.url +".pdf"} > */}
+            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.urlAadhar} target="_blank" download={ params.row.urlAadhar +".pdf"} >
                 <Button
                         variant="text"
                         color="primary"
                     >
                         <DownloadRoundedIcon />
                 </Button>
-            {/* </a> */}
+            </a>
           </Box>
         );
       },
@@ -152,14 +154,14 @@ const AdminGridComponent = () => {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            {/* <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.url} target="_blank" download={ params.row.url +".pdf"} > */}
+            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.urlPan} target="_blank" download={ params.row.urlPan +".pdf"} >
                 <Button
                         variant="text"
                         color="primary"
                     >
                         <DownloadRoundedIcon />
                 </Button>
-            {/* </a> */}
+            </a>
           </Box>
         );
       },
