@@ -244,7 +244,7 @@ const VendorCardComponent = ({ data }) => {
 
                     <Grid item >
                       <a
-                        href="https://github.com/tishya-tripathi/tender-app/blob/master/src/Instruction%20and%20Account%20details%20Form.pdf"
+                        href="src\Instruction and Account details Form.pdf"
                         target="_blank"
                         download="Terms&Conditions.pdf"
                         style={{ textDecoration: "none" }}
