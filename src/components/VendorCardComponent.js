@@ -18,8 +18,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-
-
+import pdfFile from "DisclaimerFile.pdf";
 
 
 // Used for snackbar Alert
@@ -244,8 +243,7 @@ const VendorCardComponent = ({ data }) => {
 
                     <Grid item >
                       <a
-                        href="../Instruction and Account details Form.pdf"
-                        target="_blank"
+                        href={pdfFile}
                         download
                         style={{ textDecoration: "none" }}
                       >
