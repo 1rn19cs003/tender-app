@@ -42,6 +42,7 @@ const AdminGridComponent = () => {
     }).then((res) => {
       // console.log(res);
       const data = [];
+      console.log("New res data: ", res);
       for (var i = 0; i < res.data.length; i++) {
         // console.log(res.data[i].profile.endDate);
         if (
