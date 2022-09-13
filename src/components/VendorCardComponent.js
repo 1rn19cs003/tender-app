@@ -21,6 +21,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 
 
+
 // Used for snackbar Alert
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -217,8 +218,6 @@ const VendorCardComponent = ({ data }) => {
               </Grid>
             </Paper>
 
-
-
             <Dialog open={openDialog} onClose={handleClickAway} maxWidth="sm">
               <DialogTitle>{"Terms & Conditions"}</DialogTitle>
               <DialogContent>
@@ -238,31 +237,30 @@ const VendorCardComponent = ({ data }) => {
 
                     <Grid item xs={12}>
                       <Typography variant="h9" color="text.primary">
-                        1. Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Repudiandae, velit sit amet consectetur adipisicing.
+                        1. Please download the file and Agree to the Terms &
+                        Conditions if you wish to proceed.
                       </Typography>
                     </Grid>
 
-                    <Grid item xs={12}>
-                      <Typography variant="h9" color="text.primary">
-                        2. Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Optio natus necessitatibus ducimus magnam nesciunt
-                        debitis veniam blanditiis suscipit. Omnis, corporis sit amet consectetur adipisicing.
-                      </Typography>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Typography variant="h9" color="text.primary">
-                        3. Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Odio architecto fuga voluptates similique deserunt
-                        esse, beatae fugiat sunt.
-                      </Typography>
+                    <Grid item >
+                      <a
+                        href="https://github.com/tishya-tripathi/tender-app/blob/master/src/Instruction%20and%20Account%20details%20Form.pdf"
+                        target="_blank"
+                        download="Terms&Conditions.pdf"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Button variant="outlined" color="primary">
+                          <DownloadRoundedIcon /> Download (.pdf)
+                        </Button>
+                      </a>
                     </Grid>
                   </Grid>
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClickAway} color="error">Disagree</Button>
+                <Button onClick={handleClickAway} color="error">
+                  Disagree
+                </Button>
                 <Button onClick={handleDialogClose}>Agree</Button>
               </DialogActions>
             </Dialog>
