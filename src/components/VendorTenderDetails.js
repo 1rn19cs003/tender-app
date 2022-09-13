@@ -91,14 +91,7 @@ const VendorTenderDetails = () => {
     withCredentials: true,
     crossDomain: true,
   }).then((res) => {
-    console.log(res);
-    console.log(res.data)
-
-    // console.log("Use Effect: \nres : " + res.data + "\nval : " + val.tender_name + "\nemail : ", email);
     for (var i = 0; i < res.data.length; i++) {
-      console.log(res.data[i].tenderName , " == " , window.sessionStorage.getItem("tender_name") , " => " , (res.data[i].tenderName == window.sessionStorage.getItem("tender_name")));
-      console.log(res.data[i].profile.email , " == " , email , " => " , (res.data[i].profile.email == email));
-
       if (
         res.data[i].tenderName == window.sessionStorage.getItem("tender_name") &&
         res.data[i].profile.email == email
@@ -117,25 +110,33 @@ const VendorTenderDetails = () => {
     event.preventDefault();
 
     const formData = new FormData();                //      (event.currentTarget)
-    formData.append("file", selectedFile1);
+    formData.append("emd", selectedFile1);
+    formData.append("aadhar", selectedFile2);
+    formData.append("pan", selectedFile3);
+    
     const newTender = {
       // File Upload
       tenderName: val.tender_name,
       tenderValue: val.tender_val,
       email: email,
       endDate: val.end_date,
-      tender_file: formData.get("file"),        // ******This is Uploading EMD File******
-      
-      // *****Upload Aadhar File*****
 
-      // *****Upload PAN File********
+      amountWords: val.tender_val_words,
+
+      edm: formData.get("emd"),        // ******This is Uploading EMD File******
+      
+      // *****Upload PAN File*****
+      pan: formData.get("pan"), 
+
+      // *****Upload AADHAR File********
+      aadhar: formData.get("aadhar")
 
     };
     console.log("newTender :", newTender);
     
 
-    if (newTender.tender_file === "null") {
-      window.alert("EMD File Upload is mandatory!");
+    if (newTender.edm === "null" || newTender.pan === "null" || newTender.aadhar === "null" ) {
+      window.alert("EMD, PAN and AADHAR file upload is mandatory!");
       return;
     } else if (newTender.tenderValue === "") {
       window.alert("Tender value cannot be empty!");
@@ -177,7 +178,7 @@ const VendorTenderDetails = () => {
 
           console.log("Deleting existing tender")
           // AXIOS Delete Tender - TODO
-
+          
           
           // AXIOS Connection -  Upload New Tender
           try {
