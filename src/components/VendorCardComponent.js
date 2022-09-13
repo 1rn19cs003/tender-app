@@ -18,7 +18,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import pdfFile from "DisclaimerFile.pdf";
 
 
 // Used for snackbar Alert
@@ -243,7 +242,8 @@ const VendorCardComponent = ({ data }) => {
 
                     <Grid item >
                       <a
-                        href={pdfFile}
+                        href="https://pdfhost.io/v/etors5CYN_Instruction_and_Account_details_Form"
+                        target="_blank"
                         download
                         style={{ textDecoration: "none" }}
                       >
