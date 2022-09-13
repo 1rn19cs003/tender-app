@@ -172,31 +172,45 @@ const VendorTenderDetails = () => {
 
       //  Throw <Alert>
       if (existingTender !== "") {
-        if (window.confirm("Are you sure? Your existing tender application of Rs. " + existingTender + " will be deleted.")) { // Clicks Agree
+        if (window.confirm("Are you sure? Your existing tender application of Rs. " + existingTender + " will be deleted.")) {
+          // Clicks Agree
 
+          console.log(
+            "Deleting existing tender. ",
+            newTender.tenderName,
+            newTender.email
+          );
           // Delete existing tender using newTender.tenderName and newTender.email
+          axios
+            .delete(
+              "https://tranquil-temple-34464.herokuapp.com/delete_tender",
+              {
+                data: {
+                  tenderName: newTender.tenderName,
+                  email: newTender.email,
+                },
+              }
+            )
+            .then((res) => {
+              console.log("Deleted existing tender.");
 
-          console.log("Deleting existing tender")
-          // AXIOS Delete Tender - TODO
-          
-          
-          // AXIOS Connection -  Upload New Tender
-          try {
-            const response = await axios({
-              method: "post",
-              url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
-              data: newTender,
-              headers: { "Content-Type": "multipart/form-data" },
+              // AXIOS Connection -  Upload New Tender
+              try {
+                const response = axios({
+                  method: "post",
+                  url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
+                  data: newTender,
+                  headers: { "Content-Type": "multipart/form-data" },
+                });
+                console.log("Success! Tender Uploaded.");
+                setOpen(true);
+                return;
+              } catch (error) {
+                console.log("Error. Tender not Uploaded!\n", error);
+                window.location.reload();
+                return;
+              }
             });
-            console.log("Success! Tender Uploaded.");
-            setOpen(true);
-            return;
-          } catch (error) {
-            console.log("Error. Tender not Uploaded!\n", error);
-            window.location.reload();
-            return;
-          }
-
         }
         else {
           // Clicks "Disagree" or "Click Away"
