@@ -169,13 +169,13 @@ const VendorSignin = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                {/* <Link href="#" variant="body2">
-                  Forgot password?
-                </Link> */}
+                <NavLink to="/forgotPassword" variant="body2">
+                  {"Forgot Password?"}
+                </NavLink>
               </Grid>
               <Grid item>
                 <NavLink to="/vendor/signup" variant="body2">
-                  {"Don't have an account? Sign Up!"}
+                  Don't have an account?<br/> Sign Up!
                 </NavLink>
               </Grid>
             </Grid>

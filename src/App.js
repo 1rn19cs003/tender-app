@@ -10,6 +10,7 @@ import AdminViewTender from "./components/AdminViewTender";
 import VendorUploadTender from "./components/VendorUploadTender";
 import AdminGridComponent from "./components/AdminGridComponent";
 import VendorTenderDetails from "./components/VendorTenderDetails";
+import ForgotPassword from "./components/ForgotPassword";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/admin/signin" exact element={<AdminSignin />} />
           <Route path="/vendor/signin" exact element={<VendorSignin />} />
           <Route path="/vendor/signup" exact element={<VendorSignup />} />
+          <Route path="forgotPassword" exact element={<ForgotPassword />} />
 
           <Route path="/admin/home" exact element={<AdminHome />} />
           <Route path="/admin/uploadtender" exact element={<AdminUploadTender />} />
