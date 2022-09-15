@@ -123,6 +123,7 @@ const VendorTenderDetails = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+
     const formData = new FormData();                //      (event.currentTarget)
     formData.append("emd", selectedFile1);
     formData.append("aadhar", selectedFile2);
@@ -152,7 +153,12 @@ const VendorTenderDetails = () => {
     if (newTender.edm === "null" || newTender.pan === "null" || newTender.aadhar === "null" ) {
       window.alert("EMD, PAN and AADHAR file upload is mandatory!");
       return;
-    } else if (newTender.tenderValue === "") {
+    }
+    else if (newTender.edm.type != "application/pdf" || newTender.pan.type != "application/pdf" || newTender.aadhar.type != "application/pdf") {
+      window.alert("Only PDF files are allowed!");
+      return;
+    }
+    else if (newTender.tenderValue === "") {
       window.alert("Tender value cannot be empty!");
       return;
     } else {
@@ -218,6 +224,7 @@ const VendorTenderDetails = () => {
                 });
                 console.log("Success! Tender Uploaded.");
                 setOpen(true);
+                navigate("/vendor/uploadtender");
                 return;
               } catch (error) {
                 console.log("Error. Tender not Uploaded!\n", error);
@@ -248,6 +255,7 @@ const VendorTenderDetails = () => {
           });
           console.log("Success! Tender Uploaded.");
           setOpen(true);
+          navigate("/vendor/uploadtender");
         } catch (error) {
           console.log("Error. Tender not Uploaded!\n", error);
           window.location.reload();
@@ -460,6 +468,15 @@ const VendorTenderDetails = () => {
                 {/* ----------------------------------------------- */}
 
                 <Grid item xs={4}>
+                </Grid>
+                <Grid item xs={8}>
+                  <a href="" target="_blank">
+                  </a>
+                </Grid>
+                {/* ----------------------------------------------- */}
+
+
+                <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
                     Aadhar (.pdf)
                   </Typography>
@@ -482,6 +499,13 @@ const VendorTenderDetails = () => {
                 {/* ----------------------------------------------- */}
 
                 <Grid item xs={4}>
+                </Grid>
+                <Grid item xs={8}>
+                  
+                </Grid>
+                {/* ----------------------------------------------- */}
+
+                <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
                     PAN (.pdf)
                   </Typography>
@@ -500,6 +524,14 @@ const VendorTenderDetails = () => {
                     {fileData(selectedFile3)}
                     <input type="file" onChange={handleFileSelect3} hidden />
                   </Button>
+                </Grid>
+                {/* ----------------------------------------------- */}
+
+
+                <Grid item xs={4}>
+                </Grid>
+                <Grid item xs={8}>
+                  
                 </Grid>
                 {/* ----------------------------------------------- */}
 
