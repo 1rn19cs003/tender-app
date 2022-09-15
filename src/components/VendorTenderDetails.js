@@ -106,6 +106,20 @@ const VendorTenderDetails = () => {
   });
   }, []);
 
+  // Display uploaded file's Name
+  const fileData = (selectedFile) => {
+    if (selectedFile)
+    {
+      return (
+        selectedFile.name
+      );  
+    }
+    else 
+      return (
+        "Upload"
+      )
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -425,7 +439,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
-                    EMD File
+                    EMD File (.pdf) 
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
@@ -438,7 +452,8 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    Upload (.pdf)
+                    {/* Upload (.pdf) */}
+                    {fileData(selectedFile1)}
                     <input type="file" onChange={handleFileSelect1} hidden />
                   </Button>
                 </Grid>
@@ -446,7 +461,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
-                    Aadhar
+                    Aadhar (.pdf)
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
@@ -459,7 +474,8 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    Upload (.pdf)
+                    {/* Upload (.pdf) */}
+                    {fileData(selectedFile2)}
                     <input type="file" onChange={handleFileSelect2} hidden />
                   </Button>
                 </Grid>
@@ -467,7 +483,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
-                    PAN
+                    PAN (.pdf)
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
@@ -480,7 +496,8 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    Upload (.pdf)
+                    {/* Upload (.pdf) */}
+                    {fileData(selectedFile3)}
                     <input type="file" onChange={handleFileSelect3} hidden />
                   </Button>
                 </Grid>
