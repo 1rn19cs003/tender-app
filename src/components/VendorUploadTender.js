@@ -12,9 +12,12 @@ import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import VendorCardComponent from "./VendorCardComponent";
 
+
 const VendorUploadTender = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+
+  const vendorName = window.sessionStorage.getItem("userVendorName") ;
 
   const [data, setData] = React.useState([]);  // Delete before deploy {tenderName: "abc", startDate: "09/31/2022", endDate: "10/20/2022", filename: "xyz.pdf"}
 
@@ -77,7 +80,7 @@ const VendorUploadTender = () => {
                   fontSize: "1.2rem",
                 }}
               >
-                Upload Tender
+                Hi, {vendorName}
               </Typography>
               <IconButton
                 edge="start"
@@ -91,7 +94,15 @@ const VendorUploadTender = () => {
           </AppBar>
         </Box>
 
-        <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="xl" sx={{ mt: 2, mb: 4 }}>
+          {/* <Grid container> */}
+            {/* <Typography variant="h5" color="initial" sx={{ ml: 2 , mb: 0, fontWeight: "bold" }}>
+              Hi, {"Vendor X"}
+            </Typography>
+            <Typography variant="h6" color="initial" sx={{ ml: 2 , mb: 2 }}>
+              Check out our ongoing tenders below :  
+            </Typography> */}
+          {/* </Grid> */}
           <Grid container spacing={3}>
             <VendorCardComponent data={data} />
           </Grid>

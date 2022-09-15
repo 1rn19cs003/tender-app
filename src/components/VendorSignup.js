@@ -61,6 +61,7 @@ const VendorSignup = () => {
           console.log(res);
           if (res.data.status === "success") {
             window.sessionStorage.setItem("userEmail", res.data.profile.email);
+            window.sessionStorage.setItem("userVendorName", res.data.profile.email);
             navigate("/vendor/uploadtender");
           } else {
             setOpen(true);
