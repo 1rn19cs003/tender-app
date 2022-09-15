@@ -301,7 +301,7 @@ const VendorTenderDetails = () => {
                   fontSize: "1.2rem",
                 }}
               >
-                Upload Tender
+                Upload Tender 
               </Typography>
               <IconButton
                 edge="start"
@@ -438,7 +438,7 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    Upload
+                    Upload (.pdf)
                     <input type="file" onChange={handleFileSelect1} hidden />
                   </Button>
                 </Grid>
@@ -459,7 +459,7 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    Upload
+                    Upload (.pdf)
                     <input type="file" onChange={handleFileSelect2} hidden />
                   </Button>
                 </Grid>
@@ -480,7 +480,7 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    Upload
+                    Upload (.pdf)
                     <input type="file" onChange={handleFileSelect3} hidden />
                   </Button>
                 </Grid>

@@ -268,7 +268,7 @@ const AdminUploadTender = () => {
                         variant="contained"
                         sx={{ width: "10vw" }}
                       >
-                        File
+                        File (.pdf)
                         <input type="file" onChange={handleFileSelect} hidden />
                       </Button>
 
