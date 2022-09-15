@@ -111,19 +111,28 @@ const VendorTenderDetails = () => {
   });
   }, []);
 
-  // Display uploaded file's Name
-  const fileData = (selectedFile) => {
-    if (selectedFile)
-    {
+
+
+  const hasApplied = () =>
+  {
+    if (existingTender !== "") {
       return (
-        selectedFile.name
-      );  
+        <>
+        <Grid item xs={12} sx={{ mb: 2 }}>
+          <Alert
+            severity="error"
+            sx={{ padding: "1rem", justifyContent: "center" }}
+          >
+            <strong>
+              You have already applied to this Tender. &nbsp;If you re-apply your
+              existing tender details will be deleted.
+            </strong>
+          </Alert>
+        </Grid>
+        </>
+      );
     }
-    else 
-      return (
-        "Upload"
-      )
-  };
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -343,8 +352,9 @@ const VendorTenderDetails = () => {
             </Toolbar>
           </AppBar>
         </Box>
-
+                
         <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+        {hasApplied()}
           <Grid item xs={12}>
             <Paper
               component="form"
@@ -454,7 +464,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
-                    EMD File (.pdf) 
+                    EMD File 
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
@@ -468,7 +478,6 @@ const VendorTenderDetails = () => {
                     }}
                   >
                     Upload (.pdf)
-                    {/* {fileData(selectedFile1)} */}
                     <input type="file" onChange={handleFileSelect1} hidden />
                   </Button>
                 </Grid>
@@ -486,7 +495,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
-                    Aadhar (.pdf)
+                    Aadhar 
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
@@ -500,7 +509,6 @@ const VendorTenderDetails = () => {
                     }}
                   >
                     Upload (.pdf)
-                    {/* {fileData(selectedFile2)} */}
                     <input type="file" onChange={handleFileSelect2} hidden />
                   </Button>
                 </Grid>
@@ -517,7 +525,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
-                    PAN (.pdf)
+                    PAN 
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
@@ -531,7 +539,6 @@ const VendorTenderDetails = () => {
                     }}
                   >
                     Upload (.pdf)
-                    {/* {fileData(selectedFile3)} */}
                     <input type="file" onChange={handleFileSelect3} hidden />
                   </Button>
                 </Grid>
