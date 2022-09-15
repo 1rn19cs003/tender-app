@@ -59,6 +59,11 @@ const VendorTenderDetails = () => {
   const [selectedFile2, setSelectedFile2] = React.useState(null);
   const [selectedFile3, setSelectedFile3] = React.useState(null);
 
+  const [urlFile1, setURLFile1] = React.useState(null);
+  const [urlFile2, setURLFile2] = React.useState(null);
+  const [urlFile3, setURLFile3] = React.useState(null);
+
+
   const [email, setEmail] = React.useState(
     window.sessionStorage.getItem("userEmail")
   );
@@ -268,12 +273,15 @@ const VendorTenderDetails = () => {
     
   const handleFileSelect1 = (event) => {
     setSelectedFile1(event.target.files[0]);
+    setURLFile1(URL.createObjectURL(event.target.files[0]));
   };
   const handleFileSelect2 = (event) => {
     setSelectedFile2(event.target.files[0]);
+    setURLFile2(URL.createObjectURL(event.target.files[0]));
   };
   const handleFileSelect3 = (event) => {
     setSelectedFile3(event.target.files[0]);
+    setURLFile3(URL.createObjectURL(event.target.files[0]));
   };
     
 
@@ -470,7 +478,8 @@ const VendorTenderDetails = () => {
                 <Grid item xs={4}>
                 </Grid>
                 <Grid item xs={8}>
-                  <a href="" target="_blank">
+                  <a href={urlFile1} target="_blank">
+                  {urlFile1 && "View File"}
                   </a>
                 </Grid>
                 {/* ----------------------------------------------- */}
@@ -501,7 +510,9 @@ const VendorTenderDetails = () => {
                 <Grid item xs={4}>
                 </Grid>
                 <Grid item xs={8}>
-                  
+                <a href={urlFile2} target="_blank">
+                  {urlFile2 && "View File"}
+                  </a>
                 </Grid>
                 {/* ----------------------------------------------- */}
 
@@ -531,7 +542,9 @@ const VendorTenderDetails = () => {
                 <Grid item xs={4}>
                 </Grid>
                 <Grid item xs={8}>
-                  
+                <a href={urlFile3} target="_blank">
+                  {urlFile3 && "View File"}
+                  </a>
                 </Grid>
                 {/* ----------------------------------------------- */}
 
