@@ -193,7 +193,7 @@ const AdminGridComponent = () => {
                 aria-label="Logout"
                 onClick={logout}
               >
-                <LoginIcon />
+                <Typography variant="caption" color="">Logout&nbsp;</Typography>  <LoginIcon />
               </IconButton>
             </Toolbar>
           </AppBar>

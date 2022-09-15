@@ -272,7 +272,7 @@ const ForgotPassword = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Reset Password
             </Button>
           </Box>
         </Box>

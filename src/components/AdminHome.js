@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import LoginIcon from "@mui/icons-material/Login";
 import { useTheme } from "@mui/material/styles";
 
+
 const AdminHome = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ const AdminHome = () => {
                 aria-label="Logout"
                 onClick={logout}
               >
-                <LoginIcon />
+                <Typography variant="caption" color="">Logout&nbsp;</Typography> <LoginIcon />
               </IconButton>
             </Toolbar>
           </AppBar>
