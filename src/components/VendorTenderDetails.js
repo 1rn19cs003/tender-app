@@ -267,7 +267,6 @@ const VendorTenderDetails = () => {
         }
       }
     }
-    
   };
 
     
@@ -468,8 +467,8 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    {/* Upload (.pdf) */}
-                    {fileData(selectedFile1)}
+                    Upload (.pdf)
+                    {/* {fileData(selectedFile1)} */}
                     <input type="file" onChange={handleFileSelect1} hidden />
                   </Button>
                 </Grid>
@@ -500,8 +499,8 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    {/* Upload (.pdf) */}
-                    {fileData(selectedFile2)}
+                    Upload (.pdf)
+                    {/* {fileData(selectedFile2)} */}
                     <input type="file" onChange={handleFileSelect2} hidden />
                   </Button>
                 </Grid>
@@ -531,8 +530,8 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    {/* Upload (.pdf) */}
-                    {fileData(selectedFile3)}
+                    Upload (.pdf)
+                    {/* {fileData(selectedFile3)} */}
                     <input type="file" onChange={handleFileSelect3} hidden />
                   </Button>
                 </Grid>
