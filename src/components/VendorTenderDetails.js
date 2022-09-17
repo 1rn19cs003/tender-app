@@ -313,8 +313,10 @@ const VendorTenderDetails = () => {
 
   //  Download Admin File
   const downloadAdminFile = () => {
+    const adminFileURL = window.sessionStorage.getItem("file_name");
+    console.log("Admin file download URL: ", adminFileURL);
     axios({
-      url: window.sessionStorage.getItem("file_name"), //your url
+      url: adminFileURL, //your url
       method: "GET",
       withCredentials: true,
       crossDomain: true,
@@ -332,7 +334,7 @@ const VendorTenderDetails = () => {
 
       // clean up "a" element & remove ObjectURL
       document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      URL.revokeObjectURL(href);
     });
   }
 
