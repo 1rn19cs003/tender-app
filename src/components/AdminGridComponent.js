@@ -55,9 +55,9 @@ const AdminGridComponent = () => {
             orgName: res.data[i].stud[0].profile.organization,
             phone: res.data[i].stud[0].profile.phoneno,
             tenderValue: res.data[i].profile.tenderValue,
-            urlEmd: res.data[i].profile.edm.filename,
-            urlAadhar: res.data[i].profile.aadhar.filename,
-            urlPan: res.data[i].profile.pan.filename
+            urlEmd: res.data[i].profile.edm.location,
+            urlAadhar: res.data[i].profile.aadhar.location,
+            urlPan: res.data[i].profile.pan.location
           };
           data.push(obj);
         }
@@ -109,7 +109,7 @@ const AdminGridComponent = () => {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.urlEmd} target="_blank" download={ params.row.urlEmd +".pdf"} >
+            <a href={params.row.urlEmd} target="_blank" download={ params.row.urlEmd +".pdf"} >
                 <Button
                         variant="text"
                         color="primary"
@@ -131,7 +131,7 @@ const AdminGridComponent = () => {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.urlAadhar} target="_blank" download={ params.row.urlAadhar +".pdf"} >
+            <a href={params.row.urlAadhar} target="_blank" download={ params.row.urlAadhar +".pdf"} >
                 <Button
                         variant="text"
                         color="primary"
@@ -154,7 +154,7 @@ const AdminGridComponent = () => {
       renderCell: (params) => {
         return (
           <Box textAlign="center">
-            <a href={"https://tranquil-temple-34464.herokuapp.com/uploads_tender/" + params.row.urlPan} target="_blank" download={ params.row.urlPan +".pdf"} >
+            <a href={params.row.urlPan} target="_blank" download={ params.row.urlPan +".pdf"} >
                 <Button
                         variant="text"
                         color="primary"

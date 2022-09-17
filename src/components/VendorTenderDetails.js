@@ -232,7 +232,7 @@ const VendorTenderDetails = () => {
               try {
                 const response = axios({
                   method: "post",
-                  url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
+                  url: "https://tranquil-temple-34464.herokuapp.com/upload_file,
                   data: newTender,
                   headers: { "Content-Type": "multipart/form-data" },
                 });
@@ -242,7 +242,7 @@ const VendorTenderDetails = () => {
                 return;
               } catch (error) {
                 console.log("Error. Tender not Uploaded!\n", error);
-                window.location.reload();
+                // window.location.reload();
                 return;
               }
             });
@@ -263,7 +263,7 @@ const VendorTenderDetails = () => {
         try {
           const response = await axios({
             method: "post",
-            url: "https://tranquil-temple-34464.herokuapp.com/upload_tender_file",
+            url: "https://tranquil-temple-34464.herokuapp.com/upload_file",
             data: newTender,
             headers: { "Content-Type": "multipart/form-data" },
           });
@@ -272,7 +272,7 @@ const VendorTenderDetails = () => {
           navigate("/vendor/uploadtender");
         } catch (error) {
           console.log("Error. Tender not Uploaded!\n", error);
-          window.location.reload();
+          // window.location.reload();
         }
       }
     }
@@ -309,34 +309,6 @@ const VendorTenderDetails = () => {
     setOpen(false);
   };
   // -----------------------------
-
-
-  //  Download Admin File
-  const downloadAdminFile = () => {
-    const adminFileURL = "https://tranquil-temple-34464.herokuapp.com/download_admin/" + window.sessionStorage.getItem("file_name");
-    console.log("Admin file URL: ", adminFileURL);
-    axios({
-      url: adminFileURL, //your url
-      method: "GET",
-      withCredentials: true,
-      crossDomain: true,
-      responseType: "blob", // important
-    }).then((response) => {
-      // create file link in browser's memory
-      const href = URL.createObjectURL(response.data);
-
-      // create "a" HTLM element with href to file & click
-      const link = document.createElement("a");
-      link.href = href;
-      link.setAttribute("download", "AdminFile.pdf"); //or any other extension
-      document.body.appendChild(link);
-      link.click();
-
-      // clean up "a" element & remove ObjectURL
-      document.body.removeChild(link);
-      URL.revokeObjectURL(href);
-    });
-  }
 
   const logout = () => {
     axios({
@@ -447,7 +419,6 @@ const VendorTenderDetails = () => {
                     fullWidth
                     startIcon={<DownloadRoundedIcon />}
                     variant="contained"
-                    // onClick={() => { downloadAdminFile(); }}
                   >
                     Download
                   </Button>
