@@ -242,7 +242,7 @@ const VendorTenderDetails = () => {
                 return;
               } catch (error) {
                 console.log("Error. Tender not Uploaded!\n", error);
-                // window.location.reload();
+                window.location.reload();
                 return;
               }
             });
@@ -272,7 +272,7 @@ const VendorTenderDetails = () => {
           navigate("/vendor/uploadtender");
         } catch (error) {
           console.log("Error. Tender not Uploaded!\n", error);
-          // window.location.reload();
+          window.location.reload();
         }
       }
     }
@@ -467,6 +467,7 @@ const VendorTenderDetails = () => {
                 </Grid>
                 <Grid item xs={8}>
                   <Button
+                    disabled={existingTender}
                     fullWidth
                     component="label"
                     startIcon={<FileUploadRoundedIcon />}
@@ -498,6 +499,7 @@ const VendorTenderDetails = () => {
                 </Grid>
                 <Grid item xs={8}>
                   <Button
+                    disabled={existingTender}
                     fullWidth
                     component="label"
                     startIcon={<FileUploadRoundedIcon />}
@@ -521,13 +523,14 @@ const VendorTenderDetails = () => {
                 </Grid>
                 {/* ----------------------------------------------- */}
 
-                <Grid item xs={4}>
+                <Grid item xs={4} >
                   <Typography variant="overline" color="text.primary">
                     PAN 
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
                   <Button
+                    disabled={existingTender}
                     fullWidth
                     component="label"
                     startIcon={<FileUploadRoundedIcon />}

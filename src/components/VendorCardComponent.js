@@ -242,7 +242,7 @@ const VendorCardComponent = ({ data }) => {
 
                     <Grid item >
                       <a
-                        href="https://pdfhost.io/v/etors5CYN_Instruction_and_Account_details_Form"
+                        href="https://tenderuploads.s3.ap-south-1.amazonaws.com/Instruction+and+Account+details+Form.pdf"
                         target="_blank"
                         download
                         style={{ textDecoration: "none" }}

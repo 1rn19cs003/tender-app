@@ -10,6 +10,7 @@ import { useTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import VendorCardComponent from "./VendorCardComponent";
 
 
@@ -80,7 +81,7 @@ const VendorUploadTender = () => {
                   fontSize: "1.2rem",
                 }}
               >
-                Hi, {vendorName}
+                <IconButton color="inherit"><AccountCircleRoundedIcon/>&nbsp; {vendorName}</IconButton>
               </Typography>
               <IconButton
                 edge="start"
