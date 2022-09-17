@@ -232,7 +232,7 @@ const VendorTenderDetails = () => {
               try {
                 const response = axios({
                   method: "post",
-                  url: "https://tranquil-temple-34464.herokuapp.com/upload_file,
+                  url: "https://tranquil-temple-34464.herokuapp.com/upload_file",
                   data: newTender,
                   headers: { "Content-Type": "multipart/form-data" },
                 });
