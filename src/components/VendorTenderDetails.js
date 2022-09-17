@@ -124,8 +124,8 @@ const VendorTenderDetails = () => {
             sx={{ padding: "1rem", justifyContent: "center" }}
           >
             <strong>
-              You have already applied. &nbsp;If you re-apply, your
-              existing Tender of Rs. {existingTender} will be deleted.
+              You have already submitted. &nbsp;If you re-submit, your
+              existing Tender Amount will be updated.
             </strong>
           </Alert>
         </Grid>
