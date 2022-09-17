@@ -313,13 +313,13 @@ const VendorTenderDetails = () => {
 
   //  Download Admin File
   const downloadAdminFile = () => {
-    const adminFileURL = window.sessionStorage.getItem("file_name");
-    console.log("Admin file download URL: ", adminFileURL);
+    const adminFileURL = "https://tranquil-temple-34464.herokuapp.com/download_admin/" + window.sessionStorage.getItem("file_name");
+    console.log("Admin file URL: ", adminFileURL);
     axios({
       url: adminFileURL, //your url
       method: "GET",
-      // withCredentials: true,
-      // crossDomain: true,
+      withCredentials: true,
+      crossDomain: true,
       responseType: "blob", // important
     }).then((response) => {
       // create file link in browser's memory
