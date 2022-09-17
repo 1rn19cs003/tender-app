@@ -318,8 +318,8 @@ const VendorTenderDetails = () => {
     axios({
       url: adminFileURL, //your url
       method: "GET",
-      withCredentials: true,
-      crossDomain: true,
+      // withCredentials: true,
+      // crossDomain: true,
       responseType: "blob", // important
     }).then((response) => {
       // create file link in browser's memory
