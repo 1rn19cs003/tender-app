@@ -310,6 +310,32 @@ const VendorTenderDetails = () => {
   };
   // -----------------------------
 
+
+  //  Download Admin File
+  const downloadAdminFile = () => {
+    axios({
+      url: window.sessionStorage.getItem("file_name"), //your url
+      method: "GET",
+      withCredentials: true,
+      crossDomain: true,
+      responseType: "blob", // important
+    }).then((response) => {
+      // create file link in browser's memory
+      const href = URL.createObjectURL(response.data);
+
+      // create "a" HTLM element with href to file & click
+      const link = document.createElement("a");
+      link.href = href;
+      link.setAttribute("download", "AdminFile.pdf"); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+
+      // clean up "a" element & remove ObjectURL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    });
+  }
+
   const logout = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/logout",
@@ -407,7 +433,7 @@ const VendorTenderDetails = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
-                  <a
+                  {/* <a
                     href={
                       "https://tranquil-temple-34464.herokuapp.com/uploads/" +
                       window.sessionStorage.getItem("file_name")
@@ -415,16 +441,16 @@ const VendorTenderDetails = () => {
                     target="_blank"
                     download={window.sessionStorage.getItem("file_name") + ".pdf"}
                     style={{ textDecoration: "none" }}
-                  >
+                  > */}
                   <Button
                     fullWidth
                     startIcon={<DownloadRoundedIcon />}
                     variant="contained"
-                    //   sx={{ width: "15vw", height: "8vh" }}
+                    onClick={() => { downloadAdminFile(); }}
                   >
                     Download
                   </Button>
-                  </a>
+                  {/* </a> */}
                 </Grid>
                 {/* ----------------------------------------------- */}
 
