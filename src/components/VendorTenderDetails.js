@@ -435,24 +435,23 @@ const VendorTenderDetails = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
-                  {/* <a
+                  <a
                     href={
-                      "https://tranquil-temple-34464.herokuapp.com/uploads/" +
                       window.sessionStorage.getItem("file_name")
                     }
                     target="_blank"
                     download={window.sessionStorage.getItem("file_name") + ".pdf"}
                     style={{ textDecoration: "none" }}
-                  > */}
+                  >
                   <Button
                     fullWidth
                     startIcon={<DownloadRoundedIcon />}
                     variant="contained"
-                    onClick={() => { downloadAdminFile(); }}
+                    // onClick={() => { downloadAdminFile(); }}
                   >
                     Download
                   </Button>
-                  {/* </a> */}
+                  </a>
                 </Grid>
                 {/* ----------------------------------------------- */}
 
