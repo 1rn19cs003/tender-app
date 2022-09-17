@@ -161,7 +161,26 @@ const VendorTenderDetails = () => {
       aadhar: formData.get("aadhar")
 
     };
-    console.log("newTender :", newTender);
+    // console.log("newTender :", newTender);
+    if (newTender.tenderValue === "") {
+      window.alert("Tender value cannot be empty!");
+      return;
+    }
+
+    // --------------- existingTender : TRUE -----------------------
+    // --------------- UPDATE TenderValue ONLY ---------------------
+    if (existingTender !== "")
+    {
+      console.log("Update Tender Value : ", newTender.tenderName, newTender.email, newTender.tenderValue);
+
+      // AXIOS Connection TODO
+
+
+      setOpen2(true)
+      return;
+    }
+
+
     
 
     if (newTender.edm === "null" || newTender.pan === "null" || newTender.aadhar === "null" ) {
@@ -172,90 +191,60 @@ const VendorTenderDetails = () => {
       window.alert("Only PDF files are allowed!");
       return;
     }
-    else if (newTender.tenderValue === "") {
-      window.alert("Tender value cannot be empty!");
-      return;
-    } else {
+    else {
 
-      // Code Here!!!
-      // 1. Check if Vendor has an existing tender
-      // 2. "Agree"     ->  Delete existing tender    
-      // 3. "Disagree"  -> return;
-      // 4. upload new tender  iff  existingTender === ""
+      //  Throw <Alert> | Delete Existing Tender | ReSubmit tender
+      // if (existingTender !== "") {
+      //   if (window.confirm("Are you sure? Your existing tender application of Rs. " + existingTender + " will be deleted.")) {
+      //     // Clicks Agree
 
-      // // 1. Check if Vendor has an existing tender
-      // axios({
-      //   url: "https://tranquil-temple-34464.herokuapp.com/all_data",
-      //   method: "GET",
-      //   withCredentials: true,
-      //   crossDomain: true,
-      // }).then((res) => {
-      //   // console.log("-----------res data----------------", res);
-      //   for (var i = 0; i < res.data.length; i++) {
-      //     if (
-      //       res.data[i].tenderName.trim() === newTender.tenderName.trim() &&
-      //       res.data[i].profile.email.trim() === newTender.email.trim()
-      //     ) {
-      //       // existing tender - TRUE.  Store tenderVal in existing tender
-      //       console.log("existing tender - TRUE")
-      //       setExistingTender(res.data[i].profile.tenderValue);
-      //       break;
-      //     }
+      //     console.log(
+      //       "Deleting existing tender. ",
+      //       newTender.tenderName,
+      //       newTender.email
+      //     );
+      //     // Delete existing tender using newTender.tenderName and newTender.email
+      //     axios
+      //       .delete(
+      //         "https://tranquil-temple-34464.herokuapp.com/delete_tender",
+      //         {
+      //           data: {
+      //             tenderName: newTender.tenderName,
+      //             email: newTender.email,
+      //           },
+      //         }
+      //       )
+      //       .then((res) => {
+      //         console.log("Deleted existing tender.");
+
+      //         // AXIOS Connection -  Upload New Tender
+      //         try {
+      //           const response = axios({
+      //             method: "post",
+      //             url: "https://tranquil-temple-34464.herokuapp.com/upload_file",
+      //             data: newTender,
+      //             headers: { "Content-Type": "multipart/form-data" },
+      //           });
+      //           console.log("Success! Tender Uploaded.");
+      //           setOpen(true);
+      //           navigate("/vendor/uploadtender");
+      //           return;
+      //         } catch (error) {
+      //           console.log("Error. Tender not Uploaded!\n", error);
+      //           window.location.reload();
+      //           return;
+      //         }
+      //       });
       //   }
-      // });
+      //   else {
+      //     // Clicks "Disagree" or "Click Away"
+      //     console.log("Disagree/Clickaway")
+      //     return;
+      //   }
 
-      //  Throw <Alert>
-      if (existingTender !== "") {
-        if (window.confirm("Are you sure? Your existing tender application of Rs. " + existingTender + " will be deleted.")) {
-          // Clicks Agree
+      // }
 
-          console.log(
-            "Deleting existing tender. ",
-            newTender.tenderName,
-            newTender.email
-          );
-          // Delete existing tender using newTender.tenderName and newTender.email
-          axios
-            .delete(
-              "https://tranquil-temple-34464.herokuapp.com/delete_tender",
-              {
-                data: {
-                  tenderName: newTender.tenderName,
-                  email: newTender.email,
-                },
-              }
-            )
-            .then((res) => {
-              console.log("Deleted existing tender.");
-
-              // AXIOS Connection -  Upload New Tender
-              try {
-                const response = axios({
-                  method: "post",
-                  url: "https://tranquil-temple-34464.herokuapp.com/upload_file",
-                  data: newTender,
-                  headers: { "Content-Type": "multipart/form-data" },
-                });
-                console.log("Success! Tender Uploaded.");
-                setOpen(true);
-                navigate("/vendor/uploadtender");
-                return;
-              } catch (error) {
-                console.log("Error. Tender not Uploaded!\n", error);
-                window.location.reload();
-                return;
-              }
-            });
-        }
-        else {
-          // Clicks "Disagree" or "Click Away"
-          console.log("Disagree/Clickaway")
-          return;
-        }
-
-      }
-
-
+      // ----------------------------- FIRST Tender---------------------------------
       if (existingTender === "")
       {
         console.log("First tender - True ", existingTender);
@@ -267,7 +256,7 @@ const VendorTenderDetails = () => {
             data: newTender,
             headers: { "Content-Type": "multipart/form-data" },
           });
-          console.log("Success! Tender Uploaded.");
+          console.log("Success! Tender Uploaded.", newTender);
           setOpen(true);
           navigate("/vendor/uploadtender");
         } catch (error) {
@@ -297,16 +286,15 @@ const VendorTenderDetails = () => {
   
   // -----Opening and Closing snackbar-----
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
+    setOpen2(false);
   };
   // -----------------------------
 
@@ -620,6 +608,11 @@ const VendorTenderDetails = () => {
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Tender Uploaded.
+        </Alert>
+      </Snackbar>
+      <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Amount Updated Successfully.
         </Alert>
       </Snackbar>
     </>
