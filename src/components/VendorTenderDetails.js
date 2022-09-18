@@ -193,6 +193,7 @@ const VendorTenderDetails = () => {
 
       })
       setOpen2(true);
+      navigate("/vendor/uploadtender");
       return;
     }
 
