@@ -88,20 +88,20 @@ const AdminUploadTender = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    axios({
-      url: "https://tranquil-temple-34464.herokuapp.com/status",
-      method: "GET",
-      withCredentials: true,
-      crossDomain: true,
-    }).then((res) => {
-      console.log(res);
-      if (res.data.isLogged === false) {
-        setCheck(0);
-        // console.log("Not Logged");
-      } else {
-        setCheck(1);
-      }
-    });
+    // axios({
+    //   url: "https://tranquil-temple-34464.herokuapp.com/status",
+    //   method: "GET",
+    //   withCredentials: true,
+    //   crossDomain: true,
+    // }).then((res) => {
+    //   console.log(res);
+    //   if (res.data.isLogged === false) {
+    //     setCheck(0);
+    //     // console.log("Not Logged");
+    //   } else {
+    //     setCheck(1);
+    //   }
+    // });
     if (check === 1 || check === 0) {
       const formData = new FormData(event.currentTarget);
       formData.append("file", selectedFile);
