@@ -53,7 +53,7 @@ const ForgotPassword = () => {
       if (credentials.password === data.get("renterpwd")) {
         console.log("Sending API request: ", credentials);
         axios({
-          url: "https://tranquil-temple-34464.herokuapp.com/API_NAME",
+          url: "https://tranquil-temple-34464.herokuapp.com/forgot_password",
           method: "POST",
           withCredentials: true,
           crossDomain: true,

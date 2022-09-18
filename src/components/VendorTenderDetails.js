@@ -190,12 +190,9 @@ const VendorTenderDetails = () => {
         data: updateTender,
       }).then((res) => {
         console.log("Request sent to /update_vender ", res);
-        if (res.data.sucess === true)
-          setOpen2(true)
-        else
-          console.log("Error. Value not updated.")
-      })
 
+      })
+      setOpen2(true);
       return;
     }
 

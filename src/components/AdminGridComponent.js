@@ -44,7 +44,7 @@ const AdminGridComponent = () => {
       const data = [];
       console.log("New res data: ", res);
       for (var i = 0; i < res.data.length; i++) {
-        // console.log(res.data[i].profile.endDate);
+        console.log(res.data[i].email, " ", res.data[i].tenderValue);
         if (
           res.data[i].tenderName === tenderName &&
           res.data[i].stud.length !== 0
