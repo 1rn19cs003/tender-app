@@ -45,18 +45,15 @@ const ForgotPassword = () => {
       // phoneno: data.get("phone"),
       // verified: true,
       email: data.get("email"),
-      // password: data.get("password"),
+      password: data.get("password"),
       // admin: false,
     };
     window.userVerified = "Yes";              //    REMOVE THIS LINE TO RE-ENABLE OTP VERIFICATION
     if (window.userVerified === "Yes") {
-      // if (credentials.password === data.get("renterpwd")) {
-
-
-        // Forgot Pwd --- Send Email
+      if (credentials.password === data.get("renterpwd")) {
         console.log("Sending API request: ", credentials);
         axios({
-          url: "https://tranquil-temple-34464.herokuapp.com/forgot_password",
+          url: "https://tranquil-temple-34464.herokuapp.com/API_NAME",
           method: "POST",
           withCredentials: true,
           crossDomain: true,
@@ -64,18 +61,16 @@ const ForgotPassword = () => {
         }).then((res) => {
           console.log(res);
           if (res.data.sucess === true) {
-            console.log("Email sent");
-            setOpen(true);
-            // navigate("/vendor/signin");
+            navigate("/vendor/signin");
           } else {
-            console.log("Email not sent");
+            console.log("Error ", res);
             setOpen(true);
           }
         });
-      // } else {
-      //   window.alert("Password and Re-enter Password are not the same!");
-      //   return;
-      // }
+      } else {
+        window.alert("Password and Re-enter Password are not the same!");
+        return;
+      }
     } else {
       setOpen6(true);
     }
@@ -251,7 +246,7 @@ const ForgotPassword = () => {
               value={values.email}
               onChange={handleInputChange}
             />
-            {/* <TextField
+            <TextField
               margin="normal"
               required
               fullWidth
@@ -260,8 +255,8 @@ const ForgotPassword = () => {
               type="password"
               value={values.password}
               onChange={handleInputChange}
-            /> */}
-            {/* <TextField
+            />
+            <TextField
               margin="normal"
               required
               fullWidth
@@ -270,21 +265,21 @@ const ForgotPassword = () => {
               type="password"
               value={values.renterpwd}
               onChange={handleInputChange}
-            /> */}
+            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Send Email
+              Reset Password
             </Button>
           </Box>
         </Box>
       </Container>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Reset Link sent to Email.
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Account does not exist
         </Alert>
       </Snackbar>
       <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose}>
