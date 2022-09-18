@@ -42,17 +42,17 @@ const ForgotPassword = () => {
     const credentials = {
       //   name: data.get("vendorName"),
       //   organization: data.get("orgName"),
-      phoneno: data.get("phone"),
-      verified: true,
+      // phoneno: data.get("phone"),
+      // verified: true,
       email: data.get("email"),
-      password: data.get("password"),
-      admin: false,
+      // password: data.get("password"),
+      // admin: false,
     };
-    // window.userVerified = "Yes";              //    REMOVE THIS LINE TO RE-ENABLE OTP VERIFICATION
+    window.userVerified = "Yes";              //    REMOVE THIS LINE TO RE-ENABLE OTP VERIFICATION
     if (window.userVerified === "Yes") {
       if (credentials.password === data.get("renterpwd")) {
 
-        
+
         // Forgot Pwd --- Send Email
         console.log("Sending API request: ", credentials);
         axios({
@@ -60,7 +60,7 @@ const ForgotPassword = () => {
           method: "POST",
           withCredentials: true,
           crossDomain: true,
-          data: credentials.email,
+          data: credentials,
         }).then((res) => {
           console.log(res);
           if (res.data.status === "success") {
