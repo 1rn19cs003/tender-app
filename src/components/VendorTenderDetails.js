@@ -176,31 +176,25 @@ const VendorTenderDetails = () => {
       const updateTender = {
         tenderName: newTender.tenderName,
         email: newTender.email,
-        value: newTender.tenderValue
+        tenderValue: newTender.tenderValue
       }
 
-      console.log("Update Tender Value :", updateTender);
+      console.log("Sending POST reqt :", updateTender);
 
       // AXIOS Connection TODO
-      try {
-        const response = await axios({
-          method: "post",
-          url: "https://tranquil-temple-34464.herokuapp.com/update_vender",
-          data: updateTender,
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        console.log("Success! Tender Uploaded.", updateTender);
-        setOpen2(true);
-        // navigate("/vendor/uploadtender");
-      } catch (error) {
-        console.log("Error. Tender not Uploaded!\n", error);
-        // window.location.reload();
+      axios({
+        url: "https://tranquil-temple-34464.herokuapp.com/update_vender",
+        method: "POST",
+        withCredentials: true,
+        crossDomain: true,
+        data: updateTender,
+      }).then((res) => {
+        console.log("Request sent to /update_vender ", res);
       }
 
 
 
-      setOpen2(true)
-      return;
+      // setOpen2(true)
     }
 
 
