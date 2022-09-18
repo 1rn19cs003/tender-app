@@ -51,18 +51,21 @@ const ForgotPassword = () => {
     // window.userVerified = "Yes";              //    REMOVE THIS LINE TO RE-ENABLE OTP VERIFICATION
     if (window.userVerified === "Yes") {
       if (credentials.password === data.get("renterpwd")) {
+
+        
+        // Forgot Pwd --- Send Email
         console.log("Sending API request: ", credentials);
         axios({
-          url: "https://tranquil-temple-34464.herokuapp.com/API_NAME",
+          url: "https://tranquil-temple-34464.herokuapp.com/forgot_password",
           method: "POST",
           withCredentials: true,
           crossDomain: true,
-          data: credentials,
+          data: credentials.email,
         }).then((res) => {
           console.log(res);
           if (res.data.status === "success") {
-            window.sessionStorage.setItem("userEmail", res.data.profile.email);
-            navigate("/vendor/signin");
+            console.log("Email sent : ", res);
+            // navigate("/vendor/signin");
           } else {
             setOpen(true);
           }
