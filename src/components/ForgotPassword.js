@@ -50,7 +50,7 @@ const ForgotPassword = () => {
     };
     window.userVerified = "Yes";              //    REMOVE THIS LINE TO RE-ENABLE OTP VERIFICATION
     if (window.userVerified === "Yes") {
-      if (credentials.password === data.get("renterpwd")) {
+      // if (credentials.password === data.get("renterpwd")) {
 
 
         // Forgot Pwd --- Send Email
@@ -70,10 +70,10 @@ const ForgotPassword = () => {
             setOpen(true);
           }
         });
-      } else {
-        window.alert("Password and Re-enter Password are not the same!");
-        return;
-      }
+      // } else {
+      //   window.alert("Password and Re-enter Password are not the same!");
+      //   return;
+      // }
     } else {
       setOpen6(true);
     }
