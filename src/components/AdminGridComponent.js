@@ -54,7 +54,7 @@ const AdminGridComponent = () => {
             vendorName: res.data[i].stud[0].profile.name,
             orgName: res.data[i].stud[0].profile.organization,
             phone: res.data[i].stud[0].profile.phoneno,
-            tenderValue: res.data[i].profile.tenderValue,
+            tenderValue: res.data[i].tenderValue,
             urlEmd: res.data[i].profile.edm.location,
             urlAadhar: res.data[i].profile.aadhar.location,
             urlPan: res.data[i].profile.pan.location

@@ -103,7 +103,7 @@ const VendorTenderDetails = () => {
       ) {
         // existing tender - TRUE.  Store tenderVal in existing tender
         console.log("existing tender - TRUE" + existingTender)
-        setExistingTender(res.data[i].profile.tenderValue);
+        setExistingTender(res.data[i].tenderValue);
         console.log("After setExistingTender " + existingTender)
         break;
       }
