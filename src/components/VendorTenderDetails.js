@@ -261,7 +261,7 @@ const VendorTenderDetails = () => {
           navigate("/vendor/uploadtender");
         } catch (error) {
           console.log("Error. Tender not Uploaded!\n", error);
-          window.location.reload();
+          // window.location.reload();
         }
       }
     }
