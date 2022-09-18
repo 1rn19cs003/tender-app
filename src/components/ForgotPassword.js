@@ -63,10 +63,12 @@ const ForgotPassword = () => {
           data: credentials,
         }).then((res) => {
           console.log(res);
-          if (res.data.status === "success") {
-            console.log("Email sent : ", res);
+          if (res.data.sucess === true) {
+            console.log("Email sent");
+            setOpen(true);
             // navigate("/vendor/signin");
           } else {
+            console.log("Email not sent");
             setOpen(true);
           }
         });
@@ -249,7 +251,7 @@ const ForgotPassword = () => {
               value={values.email}
               onChange={handleInputChange}
             />
-            <TextField
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -258,8 +260,8 @@ const ForgotPassword = () => {
               type="password"
               value={values.password}
               onChange={handleInputChange}
-            />
-            <TextField
+            /> */}
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -268,21 +270,21 @@ const ForgotPassword = () => {
               type="password"
               value={values.renterpwd}
               onChange={handleInputChange}
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Reset Password
+              Send Email
             </Button>
           </Box>
         </Box>
       </Container>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          Account does not exist
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Reset Link sent to Email.
         </Alert>
       </Snackbar>
       <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose}>
