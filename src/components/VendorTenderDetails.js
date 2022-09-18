@@ -171,9 +171,32 @@ const VendorTenderDetails = () => {
     // --------------- UPDATE TenderValue ONLY ---------------------
     if (existingTender !== "")
     {
-      console.log("Update Tender Value : ", newTender.tenderName, newTender.email, newTender.tenderValue);
+      // console.log("Update Tender Value : ", newTender.tenderName, newTender.email, newTender.tenderValue);
+
+      const updateTender = {
+        tenderName: newTender.tenderName,
+        email: newTender.email,
+        value: newTender.tenderValue
+      }
+
+      console.log("Update Tender Value :", updateTender);
 
       // AXIOS Connection TODO
+      try {
+        const response = await axios({
+          method: "post",
+          url: "https://tranquil-temple-34464.herokuapp.com/update_vender",
+          data: updateTender,
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        console.log("Success! Tender Uploaded.", updateTender);
+        setOpen2(true);
+        // navigate("/vendor/uploadtender");
+      } catch (error) {
+        console.log("Error. Tender not Uploaded!\n", error);
+        // window.location.reload();
+      }
+
 
 
       setOpen2(true)
