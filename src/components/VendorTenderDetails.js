@@ -190,7 +190,7 @@ const VendorTenderDetails = () => {
         data: updateTender,
       }).then((res) => {
         console.log("Request sent to /update_vender ", res);
-      }
+      })
 
 
 
