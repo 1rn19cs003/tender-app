@@ -125,7 +125,7 @@ const VendorTenderDetails = () => {
           >
             <strong>
               You have already submitted. &nbsp;If you re-submit, your
-              existing Tender Amount will be updated.
+              existing Tender Amount Rs.{existingTender} will be updated.
             </strong>
           </Alert>
         </Grid>
@@ -136,7 +136,6 @@ const VendorTenderDetails = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
 
     const formData = new FormData();                //      (event.currentTarget)
     formData.append("emd", selectedFile1);
@@ -191,7 +190,8 @@ const VendorTenderDetails = () => {
       }).then((res) => {
         console.log("Request sent to /update_vender ", res);
         setOpen2(true);
-        navigate("/vendor/uploadtender");
+
+        setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
       })
       return;
     }
@@ -274,10 +274,12 @@ const VendorTenderDetails = () => {
           });
           console.log("Success! Tender Uploaded.", newTender);
           setOpen(true);
-          navigate("/vendor/uploadtender");
+
+          setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
+          return;
         } catch (error) {
           console.log("Error. Tender not Uploaded!\n", error);
-          // window.location.reload();
+          window.location.reload();
         }
       }
     }
