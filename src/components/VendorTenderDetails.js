@@ -54,6 +54,8 @@ const VendorTenderDetails = () => {
     }
   }
 });
+
+  const [firstClick, setFirstClick] = React.useState(true);
   //---------------------------
 
   const [selectedFile1, setSelectedFile1] = React.useState(null);
@@ -113,6 +115,13 @@ const VendorTenderDetails = () => {
   }, []);
 
   const withdrawTender = () => {
+
+    if (firstClick === false)
+      return;
+    
+    setFirstClick(false);
+
+    
     if (window.confirm("Do you really want to withdraw your tender?"))
     {
       console.log("Withdraw Tender", val.tender_name, email);
@@ -172,6 +181,11 @@ const VendorTenderDetails = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (firstClick === false)
+      return;
+    
+    setFirstClick(false);
 
     const formData = new FormData();                //      (event.currentTarget)
     formData.append("emd", selectedFile1);
