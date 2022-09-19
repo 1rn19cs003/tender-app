@@ -128,7 +128,9 @@ const VendorTenderDetails = () => {
             )
         .then((res) => {
           console.log("Tender Successfukky Withdrawn", res);
-          window.location.reload();
+          setOpen3(true);
+
+          setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
          })
     }
     return;
@@ -339,6 +341,7 @@ const VendorTenderDetails = () => {
   // -----Opening and Closing snackbar-----
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
 
 
   const handleClose = (event, reason) => {
@@ -347,6 +350,7 @@ const VendorTenderDetails = () => {
     }
     setOpen(false);
     setOpen2(false);
+    setOpen3(false);
   };
   // -----------------------------
 
@@ -664,7 +668,12 @@ const VendorTenderDetails = () => {
       </Snackbar>
       <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Amount Updated Successfully.
+          Amount Updated.
+        </Alert>
+      </Snackbar>
+      <Snackbar open={open3} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Tender Withdrawn.
         </Alert>
       </Snackbar>
     </>
