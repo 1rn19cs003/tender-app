@@ -20,6 +20,7 @@ import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import { ToWords } from 'to-words';
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 
@@ -111,6 +112,28 @@ const VendorTenderDetails = () => {
   });
   }, []);
 
+  const withdrawTender = () => {
+    if (window.confirm("Do you really want to withdraw your tender?"))
+    {
+      console.log("Withdraw Tender", val.tender_name, email);
+      
+      axios.delete(
+              "https://tranquil-temple-34464.herokuapp.com/delete_tender",
+              {
+                data: {
+                  tenderName: val.tender_name,
+                  email: email,
+                },
+              }
+            )
+        .then((res) => {
+          console.log("Tender Successfukky Withdrawn", res);
+          window.location.reload();
+         })
+    }
+    return;
+  };
+
 
 
   const hasApplied = () =>
@@ -118,17 +141,28 @@ const VendorTenderDetails = () => {
     if (existingTender !== "") {
       return (
         <>
-        <Grid item xs={12} sx={{ mb: 2 }}>
-          <Alert
-            severity="error"
-            sx={{ padding: "1rem", justifyContent: "center" }}
-          >
-            <strong>
-              You have already submitted. &nbsp;If you re-submit, your
-              existing Tender Amount Rs.{existingTender} will be updated.
-            </strong>
-          </Alert>
-        </Grid>
+          <Grid item xs={12} sx={{ mb: 2 }}>
+            <Alert
+              severity="error"
+              sx={{ padding: "1rem", justifyContent: "center" }}
+            >
+              <strong>
+                You have already submitted. &nbsp;If you re-submit, your
+                existing Tender Amount Rs.{existingTender} will be updated.
+              </strong>
+            </Alert>
+            <Button
+              fullWidth
+              startIcon={<DeleteForeverIcon />}
+              variant="contained"
+              sx={{ marginTop: "1rem", justifyContent: "center" }}
+              onClick={() => {
+                withdrawTender();
+              }}
+            >
+              Click Here to Withdraw Tender
+            </Button>
+          </Grid>
         </>
       );
     }
