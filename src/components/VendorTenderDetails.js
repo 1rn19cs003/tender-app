@@ -586,7 +586,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={3}>
                 <a
-                        href="#"
+                        href={hrefEMD}
                         target="_blank"
                         download
                         style={{ textDecoration: "none" }}
@@ -652,7 +652,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={3}>
                 <a
-                        href="#"
+                        href={hrefAADHAR}
                         target="_blank"
                         download
                         style={{ textDecoration: "none" }}
@@ -718,7 +718,7 @@ const VendorTenderDetails = () => {
 
                <Grid item xs={3}>
                 <a
-                        href="#"
+                        href={hrefPAN}
                         target="_blank"
                         download
                         style={{ textDecoration: "none" }}
