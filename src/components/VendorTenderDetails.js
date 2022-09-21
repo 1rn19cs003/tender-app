@@ -66,6 +66,7 @@ const VendorTenderDetails = () => {
   const [urlFile2, setURLFile2] = React.useState(null);
   const [urlFile3, setURLFile3] = React.useState(null);
 
+  const [existing_val, set_existing_val] = React.useState("0.00");
 
   const [email, setEmail] = React.useState(
     window.sessionStorage.getItem("userEmail")
@@ -75,7 +76,6 @@ const VendorTenderDetails = () => {
     end_date: window.sessionStorage.getItem("end_date"),
     tender_val: "",
     tender_val_words: "",
-    existing_val: "0.00",
   });
 
   const handleValueChange = (e) => {
@@ -96,7 +96,7 @@ const VendorTenderDetails = () => {
 
 
 
-  const [isWithdrawn, setIsWithdrawn] = React.useState(0);
+  const [isWithdrawn, setIsWithdrawn] = React.useState();
   const [existingTender, setExistingTender] = React.useState("");
   React.useEffect(() => { 
   // 1. Check if Vendor has an existing tender
@@ -116,7 +116,7 @@ const VendorTenderDetails = () => {
         console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].tenderValue);
         if (existingTender !== "" && !isWithdrawn) {
-          val.existing_val = existingTender; 
+          set_existing_val(existingTender); 
         }
         // Set download links of EMD, PAN, AADHAR to state variables 
         sethrefEMD( res.data[i].profile.edm.location );
@@ -150,7 +150,7 @@ const VendorTenderDetails = () => {
         method: "POST",
         withCredentials: true,
         crossDomain: true,
-        data: { tenderName: val.tender_name, email: email, withdraw: 1 },
+        data: { tenderName: val.tender_name, email: email, withdraw: "YES." },
       }).then((res) => {
         console.log("Tender withdrawn successfully. ", res);
       })      
@@ -223,7 +223,7 @@ const VendorTenderDetails = () => {
       edm: formData.get("emd"),
       pan: formData.get("pan"), 
       aadhar: formData.get("aadhar"),
-      withdraw: 0                            //      set Withdrawn field
+      withdraw: null                      //      set Withdrawn field
     };
     console.log("New Tender : ", newTender);
 
@@ -586,6 +586,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={3}>
                 <a
+                        disabled={!existingTender || isWithdrawn}
                         href={hrefEMD}
                         target="_blank"
                         download
@@ -652,6 +653,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={3}>
                 <a
+                        disabled={!existingTender || isWithdrawn}
                         href={hrefAADHAR}
                         target="_blank"
                         download
@@ -718,6 +720,7 @@ const VendorTenderDetails = () => {
 
                <Grid item xs={3}>
                 <a
+                        disabled={!existingTender || isWithdrawn}
                         href={hrefPAN}
                         target="_blank"
                         download
@@ -771,7 +774,7 @@ const VendorTenderDetails = () => {
                     label="Existing Tender Amount"
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
-                    defaultValue={val.existing_val}
+                    defaultValue={existing_val}
                     variant="outlined"
                     InputProps={{
                       readOnly: true,
