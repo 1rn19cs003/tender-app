@@ -227,7 +227,7 @@ const VendorTenderDetails = () => {
       tenderName: val.tender_name,
       tenderValue: val.tender_val,
       email: email,
-      endDate: val.end_date,
+      endDate: window.sessionStorage.getItem("actual_end_date"),
       amountWords: val.tender_val_words,
       edm: formData.get("emd"),
       pan: formData.get("pan"), 

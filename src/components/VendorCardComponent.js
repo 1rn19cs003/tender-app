@@ -147,6 +147,7 @@ const VendorCardComponent = ({ data }) => {
     for (let i = 0; i < data.length; i++)
       if (data[i].tenderName.trim() === x.trim())
       {
+        window.sessionStorage.setItem("actual_end_date", data[i].endDate);
         window.sessionStorage.setItem("end_date", formatEndDate(data[i].endDate));
         window.sessionStorage.setItem("file_name", data[i].filename);
       }
