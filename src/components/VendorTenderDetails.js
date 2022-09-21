@@ -159,6 +159,9 @@ const VendorTenderDetails = () => {
         // setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
         // navigate("/vendor/uploadtender");           // UNDO
     }
+    else {
+      setFirstClick(true);
+    }
     return;
   };
 
@@ -233,10 +236,12 @@ const VendorTenderDetails = () => {
     {
       if (newTender.tenderValue === "") {
         window.alert("Tender value cannot be empty!");
+        setFirstClick(true);
         return;
       }
       else if (newTender.edm === "null" || newTender.pan === "null" || newTender.aadhar === "null" ) {
         window.alert("EMD, PAN and AADHAR file upload is mandatory!");
+        setFirstClick(true);
         return;
       }
       else {
@@ -274,7 +279,7 @@ const VendorTenderDetails = () => {
       if(newTender.edm !== "null")
       {
         console.log("EDM File edited");
-        axios({
+        await axios({
           url: "https://tranquil-temple-34464.herokuapp.com/upload_edm",
           method: "POST",
           data: { tenderName: val.tender_name, email: email,  EDM_file: formData.get("emd") },
@@ -288,7 +293,7 @@ const VendorTenderDetails = () => {
       if(newTender.aadhar !== "null")
       {
         console.log("AADHAR File edited");
-        axios({
+        await axios({
           url: "https://tranquil-temple-34464.herokuapp.com/upload_aadhar",
           method: "POST",
           data: { tenderName: val.tender_name, email: email,  aadhar_file: formData.get("aadhar") },
@@ -302,7 +307,7 @@ const VendorTenderDetails = () => {
       if(newTender.pan !== "null")
       {
         console.log("PAN File edited");
-        axios({
+        await axios({
           url: "https://tranquil-temple-34464.herokuapp.com/upload_pan",
           method: "POST",
           data: { tenderName: val.tender_name, email: email,  PAN_file: formData.get("pan") },
@@ -316,7 +321,7 @@ const VendorTenderDetails = () => {
       if(newTender.tenderValue !== "null")
       {
         console.log("tenderValue edited");
-        axios({
+        await axios({
           url: "https://tranquil-temple-34464.herokuapp.com/update_vender",
           method: "POST",
           withCredentials: true,
@@ -346,10 +351,12 @@ const VendorTenderDetails = () => {
 
       if (newTender.tenderValue === "") {
         window.alert("Tender value cannot be empty!");
+        setFirstClick(true);
         return;
       }
       else if (newTender.edm === "null" || newTender.pan === "null" || newTender.aadhar === "null" ) {
         window.alert("EMD, PAN and AADHAR file upload is mandatory!");
+        setFirstClick(true);
         return;
       }
       else {
@@ -368,7 +375,7 @@ const VendorTenderDetails = () => {
               console.log("Deleted existing tender");
 
               // upload new tender & set "withdrawn" to false   
-              newTender.withdraw = 0;
+              newTender.withdraw = null;
 
               // AXIOS connection 
               try {
