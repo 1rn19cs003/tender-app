@@ -29,6 +29,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+window.sessionStorage.setItem("tendVal", "0.00");
 
 
 const VendorTenderDetails = () => {
@@ -787,7 +788,7 @@ const VendorTenderDetails = () => {
                     label="Existing Tender Amount"
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
-                    value={window.sessionStorage.getItem("tendVal")}
+                    defaultValue={window.sessionStorage.getItem("tendVal")}
                     variant="outlined"
                     InputProps={{
                       readOnly: true,
