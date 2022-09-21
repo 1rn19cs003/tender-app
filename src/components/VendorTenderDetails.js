@@ -115,6 +115,11 @@ const VendorTenderDetails = () => {
         // existing tender - TRUE.  Store tenderVal in existing tender
         console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].tenderValue);
+
+        console.log("existingTender = ", existingTender);
+        console.log("isWithdrawn = ", isWithdrawn);
+        console.log("existingTender !== ", existingTender !== "");
+        console.log("!isWithdrawn ", !isWithdrawn);
         if (existingTender !== "" && !isWithdrawn) {
           console.log("Setting existing_val to existingTender : ", existingTender);
           set_existing_val(existingTender); 
