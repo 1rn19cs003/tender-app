@@ -241,6 +241,7 @@ const VendorTenderDetails = () => {
     {
       if (newTender.tenderValue === "") {
         window.alert("Tender value cannot be empty!");
+        setDisp(true);
         setFirstClick(true);
         return;
       }
@@ -356,6 +357,7 @@ const VendorTenderDetails = () => {
 
       if (newTender.tenderValue === "") {
         window.alert("Tender value cannot be empty!");
+        setDisp(true);
         setFirstClick(true);
         return;
       }
