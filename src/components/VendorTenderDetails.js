@@ -440,6 +440,7 @@ const VendorTenderDetails = () => {
               fullWidth
               label="Enter Tender Amount"
               name="tender_val"
+              inputProps={{ min: 2800001  }}
               value={val.tender_val}
               onChange={handleValueChange}
               variant="outlined"
@@ -606,7 +607,7 @@ const VendorTenderDetails = () => {
 
                 <Grid item xs={4}>
                   <Typography variant="overline" color="text.primary">
-                    End Date
+                    End Date (MM/DD/YYYY)
                   </Typography>
                 </Grid>
                 <Grid item xs={8}>
@@ -946,17 +947,17 @@ const VendorTenderDetails = () => {
       </Box>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Tender Uploaded.
+        Bid Successfully Submitted.
         </Alert>
       </Snackbar>
       <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Tender Updated.
+        Bid Updated Successfully.
         </Alert>
       </Snackbar>
       <Snackbar open={open3} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Tender Withdrawn.
+          Bid Withdrawn Successfully.
         </Alert>
       </Snackbar>
       <Snackbar open={open4} autoHideDuration={30000} onClose={handleClose} sx={{marginBottom: "4rem"}}>

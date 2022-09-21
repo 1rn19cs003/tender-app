@@ -27,6 +27,15 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const VendorCardComponent = ({ data }) => {
 
+  const formatEndDate = (param) => {
+	  var x = new Date(param);
+    x.setDate(x.getDate()-1);
+  	var date = ("0" + x.getDate().toString()).slice(-2);
+    var month = ("0" + (x.getMonth() + 1).toString()).slice(-2);
+    var year = x.getFullYear().toString();
+	return month + "/" + date + "/" + year;
+}
+
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = React.useState(false);
   const handleDialogOpen = () => {
@@ -138,7 +147,7 @@ const VendorCardComponent = ({ data }) => {
     for (let i = 0; i < data.length; i++)
       if (data[i].tenderName.trim() === x.trim())
       {
-        window.sessionStorage.setItem("end_date", data[i].endDate);
+        window.sessionStorage.setItem("end_date", formatEndDate(data[i].endDate));
         window.sessionStorage.setItem("file_name", data[i].filename);
       }
     //  -------- Now "enddate" has the endDate for the User Selected tender

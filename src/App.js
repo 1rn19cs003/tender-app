@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import Home from "./components/Home";
 import AdminSignin from "./components/AdminSigin";
 import VendorSignin from "./components/VendorSignin";
@@ -12,6 +11,7 @@ import AdminGridComponent from "./components/AdminGridComponent";
 import VendorTenderDetails from "./components/VendorTenderDetails";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import HowToUse from "./components/HowToUse";
 
 function App() {
   return (
@@ -23,7 +23,8 @@ function App() {
           <Route path="/vendor/signin" exact element={<VendorSignin />} />
           <Route path="/vendor/signup" exact element={<VendorSignup />} />
           <Route path="forgotPassword" exact element={<ForgotPassword />} />
-          <Route path="/reset_password" exact element={<ResetPassword />} />
+          {/* <Route path="/reset_password" exact element={<ResetPassword />} /> */}
+          <Route path="/howtouse" exact element={<HowToUse />} />
 
 
           <Route path="/admin/home" exact element={<AdminHome />} />

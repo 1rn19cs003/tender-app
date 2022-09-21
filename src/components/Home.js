@@ -9,6 +9,19 @@ import { useTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Divider from "@mui/material/Divider";
+import pic from "../Image/murudeshwaraImage.jpg";
+// https://tenderuploads.s3.ap-south-1.amazonaws.com/wp8524763-murudeshwar-wallpapers.jpg
+
+
+const styles = {
+  paperContainer: {
+    backgroundImage: `url(${pic})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  },
+};
+
 
 function Copyright() {
   return (
@@ -45,12 +58,30 @@ const Home = () => {
               >
                 Tender Management Portal
               </Typography>
+
+              <NavLink to="/howtouse" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                sx={{ marginX: "0.5rem", paddingX: "2rem", paddingY: "2rem" }}
+              >
+                How to use?
+              </Button>
+            </NavLink>
+
+              <NavLink to="/admin/signin" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                sx={{ marginX: "0.5rem", paddingX: "3rem", paddingY: "2rem" }}
+              >
+                Admin
+              </Button>
+            </NavLink>
             </Toolbar>
           </AppBar>
         </Box>
 
         {/* Body of Home Page */}
-        <Box
+        <Box style={styles.paperContainer}
           sx={{
             minHeight: "80vh",
             alignItems: "center",
@@ -63,22 +94,22 @@ const Home = () => {
               alignItems: "center",
             }}
           >
-            <NavLink to="/admin/signin" style={{ textDecoration: "none" }}>
-              <Button
-                variant="contained"
-                sx={{ marginTop: "10rem", paddingX: "5rem", paddingY: "2rem" }}
-              >
-                Admin
-              </Button>
-            </NavLink>
             <NavLink to="/vendor/signin" style={{ textDecoration: "none" }}>
               <Button
                 variant="contained"
-                sx={{ margin: "2rem", paddingX: "5rem", paddingY: "2rem" }}
+                sx={{ marginTop: "15rem", paddingX: "5rem", paddingY: "2rem" }}
               >
                 Vendor
               </Button>
             </NavLink>
+            {/* <NavLink to="/admin/signin" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                sx={{ margin: "2rem", paddingX: "5rem", paddingY: "2rem" }}
+              >
+                Admin
+              </Button>
+            </NavLink> */}
           </Box>
         </Box>
 
@@ -100,21 +131,33 @@ const Home = () => {
               {/* Made&nbsp;&nbsp;with&nbsp;&nbsp;<span style={{ color: "red" }}>&#10084;</span>&nbsp;&nbsp;by&nbsp;&nbsp; */}
               Developed&nbsp;&nbsp;by&nbsp;&nbsp;
               <Typography variant="overline" color="text.primary">
-                <Link color="inherit" href="https://www.linkedin.com/in/abhishekjaiswal1308/" underline="none">
+                <Link
+                  color="inherit"
+                  href="https://www.linkedin.com/in/abhishekjaiswal1308/"
+                  underline="none"
+                >
                   {" "}
                   Abhishek
                 </Link>
               </Typography>{" "}
               ,&nbsp;
               <Typography variant="overline" color="text.primary">
-                <Link color="inherit" href="https://www.linkedin.com/in/sagun-sangwan-9662401b2/" underline="none">
+                <Link
+                  color="inherit"
+                  href="https://www.linkedin.com/in/sagun-sangwan-9662401b2/"
+                  underline="none"
+                >
                   {" "}
                   Sagun
                 </Link>
               </Typography>
               &nbsp; & &nbsp;
               <Typography variant="overline" color="text.primary">
-                <Link color="inherit" href="https://www.linkedin.com/in/tishya-tripathi/" underline="none">
+                <Link
+                  color="inherit"
+                  href="https://www.linkedin.com/in/tishya-tripathi/"
+                  underline="none"
+                >
                   {" "}
                   Tishya
                 </Link>
