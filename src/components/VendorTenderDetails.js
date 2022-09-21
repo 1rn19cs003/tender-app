@@ -959,7 +959,7 @@ const VendorTenderDetails = () => {
           Tender Withdrawn.
         </Alert>
       </Snackbar>
-      <Snackbar open={open4} autoHideDuration={30000} onClose={handleClose} sx={{marginBottom: "20rem"}}>
+      <Snackbar open={open4} autoHideDuration={30000} onClose={handleClose} sx={{marginBottom: "5rem"}}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Processing <HourglassTopIcon />
         </Alert>
