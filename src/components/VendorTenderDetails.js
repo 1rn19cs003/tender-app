@@ -120,7 +120,7 @@ const VendorTenderDetails = () => {
 
         if (res.data[i].tenderValue !== "" && !isWithdrawn) {
           console.log("Setting existing_val to res.data[i].tenderValue : ", res.data[i].tenderValue);
-          set_existing_val(existingTender); 
+          set_existing_val(res.data[i].tenderValue); 
           console.log("existing_val set to : ", existing_val);
         }
         // Set download links of EMD, PAN, AADHAR to state variables 
@@ -785,7 +785,7 @@ const VendorTenderDetails = () => {
                     label="Existing Tender Amount"
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
-                    defaultValue={existing_val}
+                    value={existing_val}
                     variant="outlined"
                     InputProps={{
                       readOnly: true,
