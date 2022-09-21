@@ -153,11 +153,9 @@ const VendorTenderDetails = () => {
         data: { tenderName: val.tender_name, email: email, withdraw: "YES." },
       }).then((res) => {
         console.log("Tender withdrawn successfully. ", res);
+        setOpen3(true);
+        setTimeout(function () { navigate("/vendor/uploadtender"); }, 1000);
       })      
-
-        // setOpen2(true);
-        // setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
-        // navigate("/vendor/uploadtender");           // UNDO
     }
     else {
       setFirstClick(true);
@@ -256,8 +254,7 @@ const VendorTenderDetails = () => {
           });
           console.log("Success! Tender Uploaded. Case 1.\n");
           setOpen(true);
-
-          // setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);        // UNDO
+          setTimeout(function () { navigate("/vendor/uploadtender"); }, 1000);        
           return;
         } catch (error) {
           console.log("Error. Tender not Uploaded! Case 1.\n", error);
@@ -338,7 +335,7 @@ const VendorTenderDetails = () => {
 
 
       setOpen2(true);
-      // setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);          // UNDO
+      setTimeout(function () { navigate("/vendor/uploadtender"); }, 1000);        
       return;
     }
 
@@ -387,12 +384,11 @@ const VendorTenderDetails = () => {
                 });
                 console.log("Success! Tender Uploaded. Case 3.\n");
                 setOpen(true);
-      
-                //setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);    // UNDO
+                setTimeout(function () { navigate("/vendor/uploadtender"); }, 1000);    
                 return;
               } catch (error) {
                 console.log("Error. Tender not Uploaded! Case 3.\n", error);             
-               // window.location.reload();
+               window.location.reload();
                 return;
               } 
             })
@@ -781,7 +777,7 @@ const VendorTenderDetails = () => {
                     label="Existing Tender Amount"
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
-                    defaultValue={existing_val}
+                    value={existing_val}
                     variant="outlined"
                     InputProps={{
                       readOnly: true,
