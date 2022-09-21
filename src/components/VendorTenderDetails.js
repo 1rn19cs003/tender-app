@@ -116,7 +116,9 @@ const VendorTenderDetails = () => {
         console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].tenderValue);
         if (existingTender !== "" && !isWithdrawn) {
+          console.log("Setting existing_val to existingTender : ", existingTender);
           set_existing_val(existingTender); 
+          console.log("existing_val set to : ", existing_val);
         }
         // Set download links of EMD, PAN, AADHAR to state variables 
         sethrefEMD( res.data[i].profile.edm.location );
@@ -773,7 +775,6 @@ const VendorTenderDetails = () => {
                 </Grid>
                 <Grid item xs={4}>
                   <TextField
-                    type="number"
                     label="Existing Tender Amount"
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
