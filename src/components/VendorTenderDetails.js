@@ -116,7 +116,7 @@ const VendorTenderDetails = () => {
         console.log("tenderValue[i] = ", res.data[i].tenderValue);
         console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].tenderValue);
-        window.sessionStorage.getItem("tendVal", res.data[i].tenderValue);
+        window.sessionStorage.setItem("tendVal", res.data[i].tenderValue);
         console.log("existingTender = ", existingTender);
         console.log("isWithdrawn = ", isWithdrawn);
         console.log("existingTender !== ", existingTender !== "");
@@ -137,6 +137,7 @@ const VendorTenderDetails = () => {
         break;
       }
     }
+    console.log("brrrrr : ", existingTender);
   });
   }, []);
 
