@@ -21,7 +21,7 @@ import { ToWords } from 'to-words';
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 
 
 // Used for snackbar Alert
@@ -72,10 +72,10 @@ const VendorTenderDetails = () => {
   );
   const [val, setVal] = React.useState({
     tender_name: window.sessionStorage.getItem("tender_name"),
-    // start_date: "09/20/2022",
     end_date: window.sessionStorage.getItem("end_date"),
     tender_val: "",
     tender_val_words: "",
+    existing_val: "0.00",
   });
 
   const handleValueChange = (e) => {
@@ -90,6 +90,13 @@ const VendorTenderDetails = () => {
     
   }
 
+  const [hrefEMD, sethrefEMD] = React.useState();
+  const [hrefAADHAR, sethrefAADHAR] = React.useState();
+  const [hrefPAN, sethrefPAN] = React.useState();
+
+
+
+  const [isWithdrawn, setIsWithdrawn] = React.useState(0);
   const [existingTender, setExistingTender] = React.useState("");
   React.useEffect(() => { 
   // 1. Check if Vendor has an existing tender
@@ -99,6 +106,7 @@ const VendorTenderDetails = () => {
     withCredentials: true,
     crossDomain: true,
   }).then((res) => {
+    
     for (var i = 0; i < res.data.length; i++) {
       if (
         res.data[i].tenderName == window.sessionStorage.getItem("tender_name") &&
@@ -107,7 +115,17 @@ const VendorTenderDetails = () => {
         // existing tender - TRUE.  Store tenderVal in existing tender
         console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].tenderValue);
-        console.log("After setExistingTender " + existingTender)
+        if (existingTender !== "" && !isWithdrawn) {
+          val.existing_val = existingTender; 
+        }
+        // Set download links of EMD, PAN, AADHAR to state variables 
+        sethrefEMD( res.data[i].profile.edm.location );
+        sethrefAADHAR( res.data[i].profile.aadhar.location );
+        sethrefPAN( res.data[i].profile.pan.location );
+
+        // Set isWithdrawn
+        setIsWithdrawn( res.data[i].withdraw );
+
         break;
       }
     }
@@ -124,23 +142,22 @@ const VendorTenderDetails = () => {
     
     if (window.confirm("Do you really want to withdraw your tender?"))
     {
-      console.log("Withdraw Tender", val.tender_name, email);
+      console.log("Withdrawing Tender :", val.tender_name, email);
       
-      axios.delete(
-              "https://tranquil-temple-34464.herokuapp.com/delete_tender",
-              {
-                data: {
-                  tenderName: val.tender_name,
-                  email: email,
-                },
-              }
-            )
-        .then((res) => {
-          console.log("Tender Successfukky Withdrawn", res);
-          setOpen3(true);
+      // set Withdrawn field to TRUE 
+      axios({
+        url: "https://tranquil-temple-34464.herokuapp.com/update_withdraw",
+        method: "POST",
+        withCredentials: true,
+        crossDomain: true,
+        data: { tenderName: val.tender_name, email: email, withdraw: 1 },
+      }).then((res) => {
+        console.log("Tender withdrawn successfully. ", res);
+      })      
 
-          setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
-         })
+        // setOpen2(true);
+        // setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
+        // navigate("/vendor/uploadtender");           // UNDO
     }
     return;
   };
@@ -149,7 +166,7 @@ const VendorTenderDetails = () => {
 
   const hasApplied = () =>
   {
-    if (existingTender !== "") {
+    if (existingTender !== "" && !isWithdrawn ) {
       return (
         <>
           <Grid item xs={12} sx={{ mb: 2 }}>
@@ -158,21 +175,25 @@ const VendorTenderDetails = () => {
               sx={{ padding: "1rem", justifyContent: "center" }}
             >
               <strong>
-                You have already submitted. &nbsp;If you re-submit, your
-                existing Tender Amount Rs.{existingTender} will be updated.
+                You have already submitted. &nbsp;If you re-submit, your existing tender details will be updated.
               </strong>
             </Alert>
-            <Button
-              fullWidth
-              startIcon={<DeleteForeverIcon />}
-              variant="contained"
-              sx={{ marginTop: "1rem", justifyContent: "center" }}
-              onClick={() => {
-                withdrawTender();
-              }}
+          </Grid>
+        </>
+      );
+    }
+    else if(existingTender !== "" && isWithdrawn) {
+      return (
+        <>
+          <Grid item xs={12} sx={{ mb: 2 }}>
+            <Alert
+              severity="success"
+              sx={{ padding: "1rem", justifyContent: "center" }}
             >
-              Click Here to Withdraw Tender
-            </Button>
+              <strong>
+                Tender withdrawn. You can submit a new Tender now.
+              </strong>
+            </Alert>
           </Grid>
         </>
       );
@@ -198,122 +219,28 @@ const VendorTenderDetails = () => {
       tenderValue: val.tender_val,
       email: email,
       endDate: val.end_date,
-
       amountWords: val.tender_val_words,
-
-      edm: formData.get("emd"),        // ******This is Uploading EMD File******
-      
-      // *****Upload PAN File*****
+      edm: formData.get("emd"),
       pan: formData.get("pan"), 
-
-      // *****Upload AADHAR File********
-      aadhar: formData.get("aadhar")
-
+      aadhar: formData.get("aadhar"),
+      withdraw: 0                            //      set Withdrawn field
     };
-    // console.log("newTender :", newTender);
-    if (newTender.tenderValue === "") {
-      window.alert("Tender value cannot be empty!");
-      return;
-    }
+    console.log("New Tender : ", newTender);
 
-    // --------------- existingTender : TRUE -----------------------
-    // --------------- UPDATE TenderValue ONLY ---------------------
-    if (existingTender !== "")
+    // *****************CASE 1 : First Tender Upload*************************
+
+    if (existingTender === "" && !isWithdrawn)
     {
-      // console.log("Update Tender Value : ", newTender.tenderName, newTender.email, newTender.tenderValue);
-
-      const updateTender = {
-        tenderName: newTender.tenderName,
-        email: newTender.email,
-        tenderValue: newTender.tenderValue
+      if (newTender.tenderValue === "") {
+        window.alert("Tender value cannot be empty!");
+        return;
       }
-
-      console.log("Sending POST reqt :", updateTender);
-
-      // AXIOS Connection TODO
-      axios({
-        url: "https://tranquil-temple-34464.herokuapp.com/update_vender",
-        method: "POST",
-        withCredentials: true,
-        crossDomain: true,
-        data: updateTender,
-      }).then((res) => {
-        console.log("Request sent to /update_vender ", res);
-        setOpen2(true);
-
-        setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
-      })
-      return;
-    }
-
-
-    
-
-    if (newTender.edm === "null" || newTender.pan === "null" || newTender.aadhar === "null" ) {
-      window.alert("EMD, PAN and AADHAR file upload is mandatory!");
-      return;
-    }
-    else if (newTender.edm.type != "application/pdf" || newTender.pan.type != "application/pdf" || newTender.aadhar.type != "application/pdf") {
-      window.alert("Only PDF files are allowed!");
-      return;
-    }
-    else {
-
-      //  Throw <Alert> | Delete Existing Tender | ReSubmit tender
-      // if (existingTender !== "") {
-      //   if (window.confirm("Are you sure? Your existing tender application of Rs. " + existingTender + " will be deleted.")) {
-      //     // Clicks Agree
-
-      //     console.log(
-      //       "Deleting existing tender. ",
-      //       newTender.tenderName,
-      //       newTender.email
-      //     );
-      //     // Delete existing tender using newTender.tenderName and newTender.email
-      //     axios
-      //       .delete(
-      //         "https://tranquil-temple-34464.herokuapp.com/delete_tender",
-      //         {
-      //           data: {
-      //             tenderName: newTender.tenderName,
-      //             email: newTender.email,
-      //           },
-      //         }
-      //       )
-      //       .then((res) => {
-      //         console.log("Deleted existing tender.");
-
-      //         // AXIOS Connection -  Upload New Tender
-      //         try {
-      //           const response = axios({
-      //             method: "post",
-      //             url: "https://tranquil-temple-34464.herokuapp.com/upload_file",
-      //             data: newTender,
-      //             headers: { "Content-Type": "multipart/form-data" },
-      //           });
-      //           console.log("Success! Tender Uploaded.");
-      //           setOpen(true);
-      //           navigate("/vendor/uploadtender");
-      //           return;
-      //         } catch (error) {
-      //           console.log("Error. Tender not Uploaded!\n", error);
-      //           window.location.reload();
-      //           return;
-      //         }
-      //       });
-      //   }
-      //   else {
-      //     // Clicks "Disagree" or "Click Away"
-      //     console.log("Disagree/Clickaway")
-      //     return;
-      //   }
-
-      // }
-
-      // ----------------------------- FIRST Tender---------------------------------
-      if (existingTender === "")
-      {
-        console.log("First tender - True ", existingTender);
+      else if (newTender.edm === "null" || newTender.pan === "null" || newTender.aadhar === "null" ) {
+        window.alert("EMD, PAN and AADHAR file upload is mandatory!");
+        return;
+      }
+      else {
+        console.log("CASE 1 : First Tender Upload ");
         // AXIOS Connection -  Upload New Tender
         try {
           const response = await axios({
@@ -322,16 +249,149 @@ const VendorTenderDetails = () => {
             data: newTender,
             headers: { "Content-Type": "multipart/form-data" },
           });
-          console.log("Success! Tender Uploaded.", newTender);
+          console.log("Success! Tender Uploaded. Case 1.\n");
           setOpen(true);
 
-          setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);
+          // setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);        // UNDO
           return;
         } catch (error) {
-          console.log("Error. Tender not Uploaded!\n", error);
+          console.log("Error. Tender not Uploaded! Case 1.\n", error);
           window.location.reload();
+          return;
         }
       }
+      return;
+    }
+
+
+    // *****************CASE 2 : Editing after First Upload*************************
+    if (existingTender !== "" && !isWithdrawn)
+    {
+      console.log("CASE 2 : Editing after First Upload");
+
+
+      // EDM File edited
+      if(newTender.edm !== "null")
+      {
+        console.log("EDM File edited");
+        axios({
+          url: "https://tranquil-temple-34464.herokuapp.com/upload_edm",
+          method: "POST",
+          data: { tenderName: val.tender_name, email: email,  EDM_file: formData.get("emd") },
+          headers: { "Content-Type": "multipart/form-data" },
+        }).then((res) => {
+          console.log("EDM File updated successfully", res);
+        })
+      }
+      
+      // AADHAR File edited
+      if(newTender.aadhar !== "null")
+      {
+        console.log("AADHAR File edited");
+        axios({
+          url: "https://tranquil-temple-34464.herokuapp.com/upload_aadhar",
+          method: "POST",
+          data: { tenderName: val.tender_name, email: email,  aadhar_file: formData.get("aadhar") },
+          headers: { "Content-Type": "multipart/form-data" },
+        }).then((res) => {
+          console.log("Aadhar File updated successfully", res);
+        })
+      }
+
+      // PAN File edited
+      if(newTender.pan !== "null")
+      {
+        console.log("PAN File edited");
+        axios({
+          url: "https://tranquil-temple-34464.herokuapp.com/upload_pan",
+          method: "POST",
+          data: { tenderName: val.tender_name, email: email,  PAN_file: formData.get("pan") },
+          headers: { "Content-Type": "multipart/form-data" },
+        }).then((res) => {
+          console.log("PAN File updated successfully", res);
+        })
+      }
+
+      // TenderValue edited 
+      if(newTender.tenderValue !== "null")
+      {
+        console.log("tenderValue edited");
+        axios({
+          url: "https://tranquil-temple-34464.herokuapp.com/update_vender",
+          method: "POST",
+          withCredentials: true,
+          crossDomain: true,
+          data: {
+            tenderName: newTender.tenderName,
+            email: newTender.email,
+            tenderValue: newTender.tenderValue
+          },
+        }).then((res) => {
+          console.log("tenderValue updated successfully ", res);
+        })
+      }
+
+
+      setOpen2(true);
+      // setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);          // UNDO
+      return;
+    }
+
+
+
+    // *****************CASE 3 : Second Tender Upload after Withdrawing*************************
+    if (existingTender !== "" && isWithdrawn)
+    {
+      console.log("CASE 3 : Second Tender Upload after Withdrawing");
+
+      if (newTender.tenderValue === "") {
+        window.alert("Tender value cannot be empty!");
+        return;
+      }
+      else if (newTender.edm === "null" || newTender.pan === "null" || newTender.aadhar === "null" ) {
+        window.alert("EMD, PAN and AADHAR file upload is mandatory!");
+        return;
+      }
+      else {
+        // Delete existing tender
+        axios
+            .delete(
+              "https://tranquil-temple-34464.herokuapp.com/delete_tender",
+              {
+                data: {
+                  tenderName: newTender.tenderName,
+                  email: newTender.email,
+                },
+              }
+            )
+            .then((res) => {
+              console.log("Deleted existing tender");
+
+              // upload new tender & set "withdrawn" to false   
+              newTender.withdraw = 0;
+
+              // AXIOS connection 
+              try {
+                const response = axios({
+                  method: "post",
+                  url: "https://tranquil-temple-34464.herokuapp.com/upload_file",
+                  data: newTender,
+                  headers: { "Content-Type": "multipart/form-data" },
+                });
+                console.log("Success! Tender Uploaded. Case 3.\n");
+                setOpen(true);
+      
+                //setTimeout(function () { navigate("/vendor/uploadtender"); }, 2000);    // UNDO
+                return;
+              } catch (error) {
+                console.log("Error. Tender not Uploaded! Case 3.\n", error);             
+               // window.location.reload();
+                return;
+              } 
+            })
+      }
+      
+      return;
     }
   };
 
@@ -397,7 +457,7 @@ const VendorTenderDetails = () => {
                   fontSize: "1.2rem",
                 }}
               >
-                Upload Tender 
+                Upload Tender
               </Typography>
               <IconButton
                 edge="start"
@@ -405,14 +465,17 @@ const VendorTenderDetails = () => {
                 aria-label="Logout"
                 onClick={logout}
               >
-                <Typography variant="caption" color="">Logout&nbsp;</Typography> <LoginIcon />
+                <Typography variant="caption" color="">
+                  Logout&nbsp;
+                </Typography>{" "}
+                <LoginIcon />
               </IconButton>
             </Toolbar>
           </AppBar>
         </Box>
-                
-        <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
-        {hasApplied()}
+
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          {hasApplied()}
           <Grid item xs={12}>
             <Paper
               component="form"
@@ -466,39 +529,23 @@ const VendorTenderDetails = () => {
                 </Grid>
                 <Grid item xs={8}>
                   <a
-                    href={
-                      window.sessionStorage.getItem("file_name")
-                    }
+                    href={window.sessionStorage.getItem("file_name")}
                     target="_blank"
-                    download={window.sessionStorage.getItem("file_name") + ".pdf"}
+                    download={
+                      window.sessionStorage.getItem("file_name") + ".pdf"
+                    }
                     style={{ textDecoration: "none" }}
                   >
-                  <Button
-                    fullWidth
-                    startIcon={<DownloadRoundedIcon />}
-                    variant="contained"
-                  >
-                    Download
-                  </Button>
+                    <Button
+                      fullWidth
+                      startIcon={<DownloadRoundedIcon />}
+                      variant="contained"
+                    >
+                      Download
+                    </Button>
                   </a>
                 </Grid>
-                {/* ----------------------------------------------- */}
 
-                {/* <Grid item xs={4}>
-                  <Typography variant="overline" color="text.primary">
-                    Start Date
-                  </Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <TextField
-                    fullWidth
-                    value={val.start_date}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                    variant="outlined"
-                  />
-                </Grid> */}
                 {/* ----------------------------------------------- */}
 
                 <Grid item xs={4}>
@@ -518,46 +565,78 @@ const VendorTenderDetails = () => {
                 </Grid>
                 {/* ----------------------------------------------- */}
 
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                   <Typography variant="overline" color="text.primary">
-                    EMD File 
+                    EMD File
                   </Typography>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={3}>
                   <Button
-                    disabled={existingTender}
+                    sx={{ marginX: "0.5rem", maxWidth: "10rem", }}
+                    disabled={existingTender && !isWithdrawn}
                     fullWidth
                     component="label"
                     startIcon={<FileUploadRoundedIcon />}
                     variant="contained"
-                    onChange={() => {
-                      //   uploadFile(data.tenderName);    //  Upload File Handler
-                    }}
                   >
-                    Upload (.pdf)
-                    <input type="file" onChange={handleFileSelect1} hidden />
+                    UPLOAD
+                    <input type="file" onChange={handleFileSelect1} hidden accept="application/pdf" />
                   </Button>
                 </Grid>
+
+                <Grid item xs={3}>
+                <a
+                        href="#"
+                        target="_blank"
+                        download
+                        style={{ textDecoration: "none" }}
+                      >
+                  <Button
+                    sx={{ marginX: "0.5rem", maxWidth: "10rem" }}
+                    disabled={!existingTender || isWithdrawn}
+                    fullWidth
+                    component="label"
+                    startIcon={<DownloadRoundedIcon />}
+                    variant="contained"
+                  >
+                    View EMD
+                  </Button>
+                  </a>
+                </Grid>
+
+                <Grid item xs={3}>
+                  <Button
+                    sx={{ marginX: "0.5rem", maxWidth: "10rem" }}
+                    disabled={!existingTender || isWithdrawn}
+                    fullWidth
+                    component="label"
+                    startIcon={<EditRoundedIcon />}
+                    variant="contained"
+                  >
+                    Edit
+                    <input type="file" onChange={handleFileSelect1} hidden accept="application/pdf" />
+                  </Button>
+                </Grid>
+
                 {/* ----------------------------------------------- */}
 
-                <Grid item xs={4}>
-                </Grid>
+                <Grid item xs={4}></Grid>
                 <Grid item xs={8}>
                   <a href={urlFile1} target="_blank">
-                  {urlFile1 && "View File"}
+                    {urlFile1 && "View Uploaded File"}
                   </a>
                 </Grid>
                 {/* ----------------------------------------------- */}
 
-
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                   <Typography variant="overline" color="text.primary">
-                    Aadhar 
+                    Aadhar
                   </Typography>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={3}>
                   <Button
-                    disabled={existingTender}
+                    sx={{ marginX: "0.5rem", width: "10rem" }}
+                    disabled={existingTender && !isWithdrawn}
                     fullWidth
                     component="label"
                     startIcon={<FileUploadRoundedIcon />}
@@ -566,29 +645,64 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    Upload (.pdf)
-                    <input type="file" onChange={handleFileSelect2} hidden />
+                    Upload
+                    <input type="file" onChange={handleFileSelect2} hidden accept="application/pdf" />
                   </Button>
                 </Grid>
+
+                <Grid item xs={3}>
+                <a
+                        href="#"
+                        target="_blank"
+                        download
+                        style={{ textDecoration: "none" }}
+                      >
+                  <Button
+                    sx={{ marginX: "0.5rem", width: "10rem" }}
+                    disabled={!existingTender || isWithdrawn}
+                    fullWidth
+                    component="label"
+                    startIcon={<DownloadRoundedIcon />}
+                    variant="contained"
+                  >
+                    View Aadhar
+                  </Button>
+                  </a>
+                </Grid>
+
+                <Grid item xs={3}>
+                  <Button
+                    sx={{ marginX: "0.5rem", width: "10rem" }}
+                    disabled={!existingTender || isWithdrawn}
+                    fullWidth
+                    component="label"
+                    startIcon={<EditRoundedIcon />}
+                    variant="contained"
+                  >
+                    EDIT
+                    <input type="file" onChange={handleFileSelect2} hidden accept="application/pdf" />
+                  </Button>
+                </Grid>
+
                 {/* ----------------------------------------------- */}
 
-                <Grid item xs={4}>
-                </Grid>
+                <Grid item xs={4}></Grid>
                 <Grid item xs={8}>
-                <a href={urlFile2} target="_blank">
-                  {urlFile2 && "View File"}
+                  <a href={urlFile2} target="_blank">
+                    {urlFile2 && "View Uploaded File"}
                   </a>
                 </Grid>
                 {/* ----------------------------------------------- */}
 
-                <Grid item xs={4} >
+                <Grid item xs={3}>
                   <Typography variant="overline" color="text.primary">
-                    PAN 
+                    PAN
                   </Typography>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={3}>
                   <Button
-                    disabled={existingTender}
+                    sx={{ marginX: "0.5rem", width: "10rem" }}
+                    disabled={existingTender && !isWithdrawn}
                     fullWidth
                     component="label"
                     startIcon={<FileUploadRoundedIcon />}
@@ -597,18 +711,51 @@ const VendorTenderDetails = () => {
                       //   uploadFile(data.tenderName);    //  Upload File Handler
                     }}
                   >
-                    Upload (.pdf)
-                    <input type="file" onChange={handleFileSelect3} hidden />
+                    Upload
+                    <input type="file" onChange={handleFileSelect3} hidden accept="application/pdf" />
                   </Button>
                 </Grid>
+
+               <Grid item xs={3}>
+                <a
+                        href="#"
+                        target="_blank"
+                        download
+                        style={{ textDecoration: "none" }}
+                      >
+                  <Button
+                    sx={{ marginX: "0.5rem", width: "10rem" }}
+                    disabled={!existingTender || isWithdrawn}
+                    fullWidth
+                    component="label"
+                    startIcon={<DownloadRoundedIcon />}
+                    variant="contained"
+                  >
+                    View PAN
+                  </Button>
+                  </a>
+                </Grid>
+
+                <Grid item xs={3}>
+                  <Button
+                    sx={{ marginX: "0.5rem", width: "10rem" }}
+                    disabled={!existingTender || isWithdrawn}
+                    fullWidth
+                    component="label"
+                    startIcon={<EditRoundedIcon />}
+                    variant="contained"
+                  >
+                    EDIT
+                    <input type="file" onChange={handleFileSelect3} hidden accept="application/pdf" />
+                  </Button>
+                </Grid>
+
                 {/* ----------------------------------------------- */}
 
-
-                <Grid item xs={4}>
-                </Grid>
+                <Grid item xs={4}></Grid>
                 <Grid item xs={8}>
-                <a href={urlFile3} target="_blank">
-                  {urlFile3 && "View File"}
+                  <a href={urlFile3} target="_blank">
+                    {urlFile3 && "View Uploaded File"}
                   </a>
                 </Grid>
                 {/* ----------------------------------------------- */}
@@ -618,10 +765,25 @@ const VendorTenderDetails = () => {
                     Tender Amount
                   </Typography>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={4}>
                   <TextField
                     type="number"
+                    label="Existing Tender Amount"
+                    sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
+                    defaultValue={val.existing_val}
+                    variant="outlined"
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    type="number"
+                    sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
+                    fullWidth
+                    label="Enter Tender Amount"
                     name="tender_val"
                     value={val.tender_val}
                     onChange={handleValueChange}
@@ -650,11 +812,28 @@ const VendorTenderDetails = () => {
                 </Grid>
                 {/* ----------------------------------------------- */}
 
-                
+                <Grid item xl={2}>
+                {(existingTender && !isWithdrawn) && (
+                  <Button
+                    fullWidth
+                    color="error"
+                    startIcon={<DeleteForeverIcon />}
+                    variant="contained"
+                    sx={{ height: "7vh", width: "10vw", marginX: "auto",}}
+                    onClick={() => {
+                      withdrawTender();
+                    }}
+                  >
+                    Withdraw
+                  </Button>
+                )}
+                </Grid>
+                <Grid item xl={2}>
 
-               
+                </Grid>
 
                 <Grid item xl={2}>
+
                   <Button
                     type="submit"
                     // startIcon={<CheckBoxRoundedIcon />}
@@ -682,7 +861,7 @@ const VendorTenderDetails = () => {
       </Snackbar>
       <Snackbar open={open2} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Amount Updated.
+          Tender Updated.
         </Alert>
       </Snackbar>
       <Snackbar open={open3} autoHideDuration={2000} onClose={handleClose}>
