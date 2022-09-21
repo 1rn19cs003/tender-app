@@ -29,7 +29,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-window.sessionStorage.setItem("tendVal", "0.00");
 
 
 const VendorTenderDetails = () => {
@@ -114,16 +113,13 @@ const VendorTenderDetails = () => {
         res.data[i].profile.email == email
       ) {
         // existing tender - TRUE.  Store tenderVal in existing tender
-        console.log("tenderValue[i] = ", res.data[i].tenderValue);
         console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].tenderValue);
+
         window.sessionStorage.setItem("tendVal", res.data[i].tenderValue);
-        console.log("existingTender = ", existingTender);
-        console.log("isWithdrawn = ", isWithdrawn);
-        console.log("existingTender !== ", existingTender !== "");
-        console.log("!isWithdrawn ", !isWithdrawn);
-        if (existingTender !== "" && !isWithdrawn) {
-          console.log("Setting existing_val to existingTender : ", existingTender);
+
+        if (res.data[i].tenderValue !== "" && !isWithdrawn) {
+          console.log("Setting existing_val to res.data[i].tenderValue : ", res.data[i].tenderValue);
           set_existing_val(existingTender); 
           console.log("existing_val set to : ", existing_val);
         }
@@ -141,6 +137,8 @@ const VendorTenderDetails = () => {
     console.log("brrrrr : ", existingTender);
   });
   }, []);
+
+  console.log("existing_val := ", existing_val);
 
   const withdrawTender = () => {
 
@@ -214,7 +212,6 @@ const VendorTenderDetails = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("HandleSubmit -> existingTender = ", existingTender);
 
     if (firstClick === false)
       return;
@@ -788,7 +785,7 @@ const VendorTenderDetails = () => {
                     label="Existing Tender Amount"
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
-                    defaultValue={window.sessionStorage.getItem("tendVal")}
+                    defaultValue={existing_val}
                     variant="outlined"
                     InputProps={{
                       readOnly: true,
