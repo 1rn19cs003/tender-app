@@ -112,12 +112,11 @@ const VendorTenderDetails = () => {
         res.data[i].tenderName == window.sessionStorage.getItem("tender_name") &&
         res.data[i].profile.email == email
       ) {
-        const tendVal = res.data[i].tenderValue;
-        console.log("tenderValue[i] = ", tendVal);
         // existing tender - TRUE.  Store tenderVal in existing tender
+        console.log("tenderValue[i] = ", res.data[i].tenderValue);
         console.log("existing tender - TRUE" + existingTender)
-        setExistingTender(tendVal);
-
+        setExistingTender(res.data[i].tenderValue);
+        window.sessionStorage.getItem("tendVal", res.data[i].tenderValue);
         console.log("existingTender = ", existingTender);
         console.log("isWithdrawn = ", isWithdrawn);
         console.log("existingTender !== ", existingTender !== "");
@@ -212,6 +211,8 @@ const VendorTenderDetails = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    console.log("HandleSubmit -> existingTender = ", existingTender);
 
     if (firstClick === false)
       return;
@@ -785,7 +786,7 @@ const VendorTenderDetails = () => {
                     label="Existing Tender Amount"
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
-                    value={existing_val}
+                    value={window.sessionStorage.getItem("tendVal")}
                     variant="outlined"
                     InputProps={{
                       readOnly: true,
