@@ -331,7 +331,7 @@ const VendorTenderDetails = () => {
       }
 
       // TenderValue edited 
-      if(newTender.tenderValue !== "null" && newTender.tenderValue != null )
+      if(newTender.tenderValue !== "null" && Number(newTender.tenderValue)>0  )
       {
         console.log("tenderValue edited");
         await axios({
