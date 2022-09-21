@@ -112,6 +112,7 @@ const VendorTenderDetails = () => {
         res.data[i].tenderName == window.sessionStorage.getItem("tender_name") &&
         res.data[i].profile.email == email
       ) {
+        console.log("res = ", res);
         // existing tender - TRUE.  Store tenderVal in existing tender
         console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].tenderValue);
