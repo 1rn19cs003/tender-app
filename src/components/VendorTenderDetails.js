@@ -281,11 +281,11 @@ const VendorTenderDetails = () => {
     {
       console.log("CASE 2 : Editing after First Upload");
       setOpen4(true);
-      console.log("newTender.tenderValue ", newTender.tenderValue)
-      console.log("typeof(newTender.tenderValue) ", typeof (newTender.tenderValue));
-      console.log("newTender.tenderValue != null ", newTender.tenderValue != null);
-      console.log("newTender.tenderValue != \"\" ", newTender.tenderValue != "");
-      console.log("newTender.tenderValue != \"null\" ", newTender.tenderValue != "null");
+      // console.log("newTender.tenderValue ", newTender.tenderValue)
+      // console.log("typeof(newTender.tenderValue) ", typeof (newTender.tenderValue));
+      // console.log("newTender.tenderValue != null ", newTender.tenderValue != null);
+      // console.log("newTender.tenderValue != \"\" ", newTender.tenderValue != "");
+      // console.log("newTender.tenderValue != \"null\" ", newTender.tenderValue != "null");
 
 
       // EDM File edited
@@ -331,7 +331,7 @@ const VendorTenderDetails = () => {
       }
 
       // TenderValue edited 
-      if(newTender.tenderValue !== "null" && newTender.tenderValue != "" )
+      if(newTender.tenderValue !== "null" && newTender.tenderValue != null )
       {
         console.log("tenderValue edited");
         await axios({
