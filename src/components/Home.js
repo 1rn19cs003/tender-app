@@ -83,7 +83,7 @@ const Home = () => {
         {/* Body of Home Page */}
         <Box style={styles.paperContainer}
           sx={{
-            minHeight: "80vh",
+            minHeight: "100vh",
             alignItems: "center",
           }}
         >
