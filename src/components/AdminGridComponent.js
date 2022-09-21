@@ -44,7 +44,6 @@ const AdminGridComponent = () => {
       const data = [];
       console.log("New res data: ", res);
       for (var i = 0; i < res.data.length; i++) {
-        console.log(res.data[i].email, " ", res.data[i].tenderValue);
         if (
           res.data[i].tenderName === tenderName &&
           res.data[i].stud.length !== 0
@@ -57,8 +56,13 @@ const AdminGridComponent = () => {
             tenderValue: res.data[i].tenderValue,
             urlEmd: res.data[i].profile.edm.location,
             urlAadhar: res.data[i].profile.aadhar.location,
-            urlPan: res.data[i].profile.pan.location
+            urlPan: res.data[i].profile.pan.location,
+            withdraw: res.data[i].withdraw
           };
+          if (obj.withdraw === 0)
+            obj.withdraw = ""
+          if (obj.withdraw === 1)
+            obj.withdraw = "YES."
           data.push(obj);
         }
       }
@@ -90,7 +94,7 @@ const AdminGridComponent = () => {
       field: "phone",
       headerName: "Phone No.",
       flex: 1,
-      minWidth: 200,
+      minWidth: 150,
     },
     {
       field: "tenderValue",
@@ -98,7 +102,12 @@ const AdminGridComponent = () => {
       flex: 1,
       minWidth: 200,
     },
-
+    {
+      field: "withdraw",
+      headerName: "Withdrawn",
+      flex: 1,
+      minWidth: 100,
+    },
 
     {   // --------------------------------- EMD File ----------------------------------------------------
       field: "tenderFile",
