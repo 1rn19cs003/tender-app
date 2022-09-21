@@ -22,6 +22,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 
 
 // Used for snackbar Alert
@@ -252,6 +253,7 @@ const VendorTenderDetails = () => {
       }
       else {
         console.log("CASE 1 : First Tender Upload ");
+        setOpen4(true);
         // AXIOS Connection -  Upload New Tender
         try {
           const response = await axios({
@@ -278,7 +280,12 @@ const VendorTenderDetails = () => {
     if (existingTender !== "" && !isWithdrawn)
     {
       console.log("CASE 2 : Editing after First Upload");
-      console.log("newTender.tenderValue !== ", newTender.tenderValue !== "")
+      setOpen4(true);
+      console.log("newTender.tenderValue ", newTender.tenderValue)
+      console.log("typeof(newTender.tenderValue) ", typeof (newTender.tenderValue));
+      console.log("newTender.tenderValue != null ", newTender.tenderValue != null);
+      console.log("newTender.tenderValue != \"\" ", newTender.tenderValue != "");
+      console.log("newTender.tenderValue != \"null\" ", newTender.tenderValue != "null");
 
 
       // EDM File edited
@@ -353,7 +360,6 @@ const VendorTenderDetails = () => {
     // *****************CASE 3 : Second Tender Upload after Withdrawing*************************
     if (existingTender !== "" && isWithdrawn)
     {
-      console.log("CASE 3 : Second Tender Upload after Withdrawing");
 
       if (newTender.tenderValue === "") {
         window.alert("Tender value cannot be empty!");
@@ -367,6 +373,8 @@ const VendorTenderDetails = () => {
         return;
       }
       else {
+        console.log("CASE 3 : Second Tender Upload after Withdrawing");
+        setOpen4(true);
         // Delete existing tender
         axios
             .delete(
@@ -462,6 +470,7 @@ const VendorTenderDetails = () => {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
+  const [open4, setOpen4] = React.useState(false);
 
 
   const handleClose = (event, reason) => {
@@ -471,6 +480,7 @@ const VendorTenderDetails = () => {
     setOpen(false);
     setOpen2(false);
     setOpen3(false);
+    setOpen4(false);
   };
   // -----------------------------
 
@@ -947,6 +957,11 @@ const VendorTenderDetails = () => {
       <Snackbar open={open3} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Tender Withdrawn.
+        </Alert>
+      </Snackbar>
+      <Snackbar open={open4} autoHideDuration={30000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Processing <HourglassTopIcon />
         </Alert>
       </Snackbar>
     </>
