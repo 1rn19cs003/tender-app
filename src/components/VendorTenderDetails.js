@@ -55,6 +55,8 @@ const VendorTenderDetails = () => {
   }
 });
 
+  const [disp, setDisp] = React.useState(false);
+
   const [firstClick, setFirstClick] = React.useState(true);
   //---------------------------
 
@@ -116,13 +118,11 @@ const VendorTenderDetails = () => {
         console.log("existing tender - TRUE" + existingTender)
         setExistingTender(res.data[i].tenderValue);
 
-        window.sessionStorage.setItem("tendVal", res.data[i].tenderValue);
-
+        // set existing_val
         if (res.data[i].tenderValue !== "" && !isWithdrawn) {
-          console.log("Setting existing_val to res.data[i].tenderValue : ", res.data[i].tenderValue);
           set_existing_val(res.data[i].tenderValue); 
-          console.log("existing_val set to : ", existing_val);
         }
+
         // Set download links of EMD, PAN, AADHAR to state variables 
         sethrefEMD( res.data[i].profile.edm.location );
         sethrefAADHAR( res.data[i].profile.aadhar.location );
@@ -134,11 +134,9 @@ const VendorTenderDetails = () => {
         break;
       }
     }
-    console.log("brrrrr : ", existingTender);
   });
   }, []);
 
-  console.log("existing_val := ", existing_val);
 
   const withdrawTender = () => {
 
@@ -279,6 +277,7 @@ const VendorTenderDetails = () => {
     if (existingTender !== "" && !isWithdrawn)
     {
       console.log("CASE 2 : Editing after First Upload");
+      console.log("newTender.tenderValue !== ", newTender.tenderValue !== "")
 
 
       // EDM File edited
@@ -324,7 +323,7 @@ const VendorTenderDetails = () => {
       }
 
       // TenderValue edited 
-      if(newTender.tenderValue !== "null")
+      if(newTender.tenderValue !== "null" && newTender.tenderValue != "" )
       {
         console.log("tenderValue edited");
         await axios({
@@ -406,6 +405,39 @@ const VendorTenderDetails = () => {
       return;
     }
   };
+
+  const displayAmountFields = () => {
+    if (disp)
+      return (
+        <>
+          <Grid item xs={4}></Grid>
+          <Grid item xs={4}>
+            <TextField
+              label="Existing Tender Amount"
+              sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
+              fullWidth
+              value={existing_val}
+              variant="outlined"
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              type="number"
+              sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
+              fullWidth
+              label="Enter Tender Amount"
+              name="tender_val"
+              value={val.tender_val}
+              onChange={handleValueChange}
+              variant="outlined"
+            />
+          </Grid>
+        </>
+      );
+  }
 
     
   const handleFileSelect1 = (event) => {
@@ -781,6 +813,38 @@ const VendorTenderDetails = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
+                <Button
+                    sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
+                    fullWidth
+                    component="label"
+                    variant="contained"
+                    onClick={() => {disp ? setDisp(false) : setDisp(true)}}
+                  >
+                    View Amount
+                  </Button>
+                </Grid>
+                <Grid item xs={4}>
+                <Button
+                    sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
+                    fullWidth
+                    component="label"
+                    startIcon={<EditRoundedIcon />}
+                    variant="contained"
+                    onClick={() => {disp ? setDisp(false) : setDisp(true)}}
+                  >
+                    Edit Amount
+                  </Button>
+                </Grid>
+
+
+
+                {/* ---------------------HERE-------------------------- */}
+
+                {displayAmountFields()}
+
+                {/* <Grid item xs={4}>
+                </Grid>
+                <Grid item xs={4}>
                   <TextField
                     label="Existing Tender Amount"
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
@@ -803,7 +867,7 @@ const VendorTenderDetails = () => {
                     onChange={handleValueChange}
                     variant="outlined"
                   />
-                </Grid>
+                </Grid> */}
                 {/* ----------------------------------------------- */}
 
                 <Grid item xs={4}>
