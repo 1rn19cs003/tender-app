@@ -56,7 +56,9 @@ const VendorTenderDetails = () => {
   }
 });
 
-  const [disp, setDisp] = React.useState(false);
+  const [disp1, setDisp1] = React.useState(false);  // View Amount toggle display
+  const [disp2, setDisp2] = React.useState(true);  // Edit Amount toggle display
+
 
   const [firstClick, setFirstClick] = React.useState(true);
   //---------------------------
@@ -102,6 +104,7 @@ const VendorTenderDetails = () => {
   const [isWithdrawn, setIsWithdrawn] = React.useState();
   const [existingTender, setExistingTender] = React.useState("");
   React.useEffect(() => { 
+
   // 1. Check if Vendor has an existing tender
   axios({
     url: "https://tranquil-temple-34464.herokuapp.com/all_data",
@@ -130,7 +133,10 @@ const VendorTenderDetails = () => {
         sethrefPAN( res.data[i].profile.pan.location );
 
         // Set isWithdrawn
-        setIsWithdrawn( res.data[i].withdraw );
+        setIsWithdrawn(res.data[i].withdraw);
+        
+        // Set disp2 i.e. EDIT AMOUNT to false
+        setDisp2(false);
 
         break;
       }
@@ -241,8 +247,8 @@ const VendorTenderDetails = () => {
     if (existingTender === "" && !isWithdrawn)
     {
       if (newTender.tenderValue === "") {
+        setDisp2(true);
         window.alert("Tender value cannot be empty!");
-        setDisp(true);
         setFirstClick(true);
         return;
       }
@@ -362,8 +368,8 @@ const VendorTenderDetails = () => {
     {
 
       if (newTender.tenderValue === "") {
+        setDisp2(true);
         window.alert("Tender value cannot be empty!");
-        setDisp(true);
         setFirstClick(true);
         return;
       }
@@ -416,11 +422,10 @@ const VendorTenderDetails = () => {
     }
   };
 
-  const displayAmountFields = () => {
-    if (disp)
+  const displayViewAmountField = () => {
+    if (disp1)
       return (
         <>
-          <Grid item xs={4}></Grid>
           <Grid item xs={4}>
             <TextField
               label="Existing Tender Amount"
@@ -433,6 +438,20 @@ const VendorTenderDetails = () => {
               }}
             />
           </Grid>
+        </>
+      )
+      else 
+      return (
+        <>
+          <Grid item xs={4}></Grid>
+        </>
+      )
+  }
+
+  const displayEditAmountField = () => {
+    if (disp2) 
+      return (
+        <>
           <Grid item xs={4}>
             <TextField
               type="number"
@@ -447,7 +466,13 @@ const VendorTenderDetails = () => {
             />
           </Grid>
         </>
-      );
+      )
+    else 
+      return (
+        <>
+          <Grid item xs={4}></Grid>
+        </>
+      )
   }
 
     
@@ -827,23 +852,25 @@ const VendorTenderDetails = () => {
                 </Grid>
                 <Grid item xs={4}>
                 <Button
+                    disabled={existingTender === "" && !isWithdrawn}
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
                     component="label"
                     variant="contained"
-                    onClick={() => {disp ? setDisp(false) : setDisp(true)}}
+                    onClick={() => {disp1 ? setDisp1(false) : setDisp1(true)}}
                   >
                     View Amount
                   </Button>
                 </Grid>
                 <Grid item xs={4}>
                 <Button
+                    disabled={existingTender === "" && !isWithdrawn}
                     sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
                     fullWidth
                     component="label"
-                    startIcon={<EditRoundedIcon />}
+                    // startIcon={<EditRoundedIcon />}
                     variant="contained"
-                    onClick={() => {disp ? setDisp(false) : setDisp(true)}}
+                    onClick={() => {disp2 ? setDisp2(false) : setDisp2(true)}}
                   >
                     Edit Amount
                   </Button>
@@ -852,35 +879,14 @@ const VendorTenderDetails = () => {
 
 
                 {/* ---------------------HERE-------------------------- */}
+                
 
-                {displayAmountFields()}
+                <Grid item xs={4}></Grid>
 
-                {/* <Grid item xs={4}>
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    label="Existing Tender Amount"
-                    sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
-                    fullWidth
-                    value={existing_val}
-                    variant="outlined"
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    type="number"
-                    sx={{ marginX: "0.5rem", maxWidth: "20rem" }}
-                    fullWidth
-                    label="Enter Tender Amount"
-                    name="tender_val"
-                    value={val.tender_val}
-                    onChange={handleValueChange}
-                    variant="outlined"
-                  />
-                </Grid> */}
+                {displayViewAmountField()}
+
+                {displayEditAmountField()}
+
                 {/* ----------------------------------------------- */}
 
                 <Grid item xs={4}>
