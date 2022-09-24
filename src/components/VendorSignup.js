@@ -54,7 +54,7 @@ const VendorSignup = () => {
         axios({
           url: "https://tranquil-temple-34464.herokuapp.com/register",
           method: "POST",
-          // withCredentials: true,
+          withCredentials: true,
           crossDomain: true,
           data: credentials,
         }).then((res) => {

@@ -51,7 +51,7 @@ const ResetPassword = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/reset_password",
       method: "GET",
-      // withCredentials: true,
+      withCredentials: true,
       crossDomain: true,
       data: credentials,
     }).then((res) => {

@@ -100,6 +100,7 @@ const VendorTenderDetails = () => {
   const [hrefPAN, sethrefPAN] = React.useState();
 
 
+
   const [isWithdrawn, setIsWithdrawn] = React.useState();
   const [existingTender, setExistingTender] = React.useState("");
   React.useEffect(() => { 
@@ -108,7 +109,7 @@ const VendorTenderDetails = () => {
   axios({
     url: "https://tranquil-temple-34464.herokuapp.com/all_data",
     method: "GET",
-    // withCredentials: true,
+    withCredentials: true,
     crossDomain: true,
   }).then((res) => {
     
@@ -160,7 +161,7 @@ const VendorTenderDetails = () => {
       axios({
         url: "https://tranquil-temple-34464.herokuapp.com/update_withdraw",
         method: "POST",
-        // withCredentials: true,
+        withCredentials: true,
         crossDomain: true,
         data: { tenderName: val.tender_name, email: email, withdraw: "YES." },
       }).then((res) => {
@@ -342,7 +343,7 @@ const VendorTenderDetails = () => {
         await axios({
           url: "https://tranquil-temple-34464.herokuapp.com/update_vender",
           method: "POST",
-          // withCredentials: true,
+          withCredentials: true,
           crossDomain: true,
           data: {
             tenderName: newTender.tenderName,
@@ -513,7 +514,7 @@ const VendorTenderDetails = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/logout",
       method: "GET",
-      // withCredentials: true,
+      withCredentials: true,
       crossDomain: true,
     }).then((res) => {
       //   console.log(res);

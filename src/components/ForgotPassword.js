@@ -55,7 +55,7 @@ const ForgotPassword = () => {
         axios({
           url: "https://tranquil-temple-34464.herokuapp.com/forgot_password",
           method: "POST",
-          // withCredentials: true,
+          withCredentials: true,
           crossDomain: true,
           data: credentials,
         }).then((res) => {
