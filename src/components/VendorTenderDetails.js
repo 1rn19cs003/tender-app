@@ -100,7 +100,6 @@ const VendorTenderDetails = () => {
   const [hrefPAN, sethrefPAN] = React.useState();
 
 
-
   const [isWithdrawn, setIsWithdrawn] = React.useState();
   const [existingTender, setExistingTender] = React.useState("");
   React.useEffect(() => { 
