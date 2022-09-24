@@ -34,7 +34,7 @@ const VendorSignin = () => {
   axios({
     url: "https://tranquil-temple-34464.herokuapp.com/logout",
     method: "GET",
-    withCredentials: true,
+    // withCredentials: true,
     crossDomain: true,
   }).then((res) => {
     console.log(res);
@@ -53,7 +53,7 @@ const VendorSignin = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/vendors_signin",
       method: "POST",
-      withCredentials: true,
+      // withCredentials: true,
       crossDomain: true,
       data: credentials,
     }).then((res) => {

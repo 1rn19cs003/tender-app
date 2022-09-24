@@ -35,7 +35,7 @@ const AdminSignin = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/logout",
       method: "GET",
-      withCredentials: true,
+      // withCredentials: true,
       crossDomain: true,
     }).then((res) => {
       console.log(res);
@@ -56,7 +56,7 @@ const AdminSignin = () => {
     //   url: "https://tranquil-temple-34464.herokuapp.com/signin",
     //   method: "POST",
     //   data: credential,
-    //   withCredentials: true,
+    //   withCredentials: true, // !!!!!DO NOT CHANGE!!!!!!!!
     //   crossDomain: true,
     // }).then((res) => {
     //   // console.log(res);
@@ -77,7 +77,7 @@ const AdminSignin = () => {
               headers: {
                 "Content-Type": "application/json",
               },
-              withCredentials: true,
+              // withCredentials: true,
               crossDomain: true,
             }
           )

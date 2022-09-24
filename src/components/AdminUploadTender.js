@@ -43,7 +43,7 @@ const AdminUploadTender = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/all_admin_data",
       method: "GET",
-      withCredentials: true,
+      // withCredentials: true,
       crossDomain: true,
     }).then((res) => {
       console.log(res);
@@ -64,7 +64,7 @@ const AdminUploadTender = () => {
         const resp = await axios({
           url: "https://tranquil-temple-34464.herokuapp.com/status",
           method: "GET",
-          withCredentials: true,
+          // withCredentials: true,
           crossDomain: true
         }).then((res) => {
           console.log(res);
@@ -172,7 +172,7 @@ const AdminUploadTender = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/logout",
       method: "GET",
-      withCredentials: true,
+      // withCredentials: true,
       crossDomain: true,
     }).then((res) => {
       console.log(res);

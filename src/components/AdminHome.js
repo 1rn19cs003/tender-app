@@ -19,7 +19,7 @@ const AdminHome = () => {
     axios({
       url: "https://tranquil-temple-34464.herokuapp.com/logout",
       method: "GET",
-      withCredentials: true,
+      // withCredentials: true,
       crossDomain: true,
     }).then((res) => {
       console.log(res);
