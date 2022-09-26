@@ -384,7 +384,7 @@ const VendorTenderDetails = () => {
         // Delete existing tender
         axios
             .delete(
-              "https://tranquil-temple-34464.herokuapp.com/delete_tender",
+              "https://tranquil-temple-34464.herokuapp.com/delete_tender_file",
               {
                 data: {
                   tenderName: newTender.tenderName,
