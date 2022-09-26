@@ -150,7 +150,7 @@ const AdminUploadTender = () => {
   };
 
   const [values, setValues] = React.useState({
-    tenderName: "Tender: Add New Tender Name",
+    tenderName: "Tender Name",
   });
 
   const handleInputChange = (e) => {

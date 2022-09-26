@@ -202,7 +202,6 @@ const VendorCardComponent = ({ data }) => {
                     {data.tenderName}
                   </Typography>
                   <br></br>
-                  <br></br>
                   <Stack
                     direction="row"
                     spacing={2}
