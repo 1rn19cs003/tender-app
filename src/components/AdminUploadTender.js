@@ -269,7 +269,7 @@ const AdminUploadTender = () => {
                         sx={{ width: "10vw" }}
                       >
                         File (.pdf)
-                        <input type="file" onChange={handleFileSelect} hidden />
+                        <input type="file" onChange={handleFileSelect} hidden accept="application/pdf"/>
                       </Button>
 
                       <LocalizationProvider dateAdapter={AdapterDateFns}>
